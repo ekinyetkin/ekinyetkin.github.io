@@ -1,1 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>Ekin Yetkin — Videographer & Content Creator</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #0b0b0b;
+      color: #f5f5f5;
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1200px, 90%);
+      margin: auto;
+    }
+
+    /* NAVBAR */
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 25px 0;
+      z-index: 10;
+      background: rgba(11, 11, 11, 0.8);
+      backdrop-filter: blur(10px);
+    }
+
+    nav .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+      font-size: 14px;
+    }
+
+    nav a {
+      opacity: 0.7;
+      transition: 0.2s;
+    }
+
+    nav a:hover {
+      opacity: 1;
+    }
+
+    /* HERO */
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 80px;
+    }
+
+    .hero h1 {
+      font-size: clamp(60px, 10vw, 140px);
+      line-height: 0.9;
+      letter-spacing: -6px;
+      max-width: 1000px;
+    }
+
+    .hero p {
+      margin-top: 35px;
+      font-size: 20px;
+      color: #aaa;
+      max-width: 550px;
+    }
+
+    .hero-buttons {
+      margin-top: 35px;
+      display: flex;
+      gap: 15px;
+    }
+
+    .button {
+      padding: 14px 22px;
+      border: 1px solid #555;
+      border-radius: 100px;
+      font-size: 14px;
+      transition: 0.2s;
+    }
+
+    .button:hover {
+      background: #fff;
+      color: #000;
+    }
+
+    /* SECTION */
+
+    section {
+      padding: 130px 0;
+    }
+
+    .section-title {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #777;
+      margin-bottom: 50px;
+    }
+
+    /* WORK */
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 25px;
+    }
+
+    .work-card {
+      aspect-ratio: 16 / 10;
+      background: #181818;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #666;
+      font-size: 14px;
+      overflow: hidden;
+    }
+
+    .work-card:hover {
+      background: #222;
+    }
+
+    .work-info {
+      margin-top: 15px;
+      margin-bottom: 35px;
+    }
+
+    .work-info h3 {
+      font-size: 22px;
+      margin-bottom: 5px;
+    }
+
+    .work-info p {
+      color: #777;
+      font-size: 14px;
+    }
+
+    /* ABOUT */
+
+    .about {
+      max-width: 800px;
+    }
+
+    .about h2 {
+      font-size: clamp(35px, 5vw, 65px);
+      line-height: 1;
+      letter-spacing: -2px;
+    }
+
+    .about p {
+      margin-top: 30px;
+      color: #aaa;
+      font-size: 18px;
+    }
+
+    /* SERVICES */
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      border-top: 1px solid #333;
+    }
+
+    .service {
+      padding: 30px 0;
+      border-bottom: 1px solid #333;
+      font-size: 24px;
+    }
+
+    /* SOCIAL */
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .stat {
+      border: 1px solid #333;
+      padding: 35px;
+    }
+
+    .stat-number {
+      font-size: 45px;
+      font-weight: 700;
+    }
+
+    .stat-label {
+      color: #777;
+      margin-top: 5px;
+    }
+
+    /* CONTACT */
+
+    .contact h2 {
+      font-size: clamp(50px, 8vw, 110px);
+      line-height: 0.95;
+      letter-spacing: -4px;
+    }
+
+    .contact p {
+      margin-top: 30px;
+      color: #888;
+    }
+
+    footer {
+      padding: 30px 0;
+      border-top: 1px solid #222;
+      color: #666;
+      font-size: 13px;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 700px) {
+
+      nav ul {
+        display: none;
+      }
+
+      .hero h1 {
+        letter-spacing: -3px;
+      }
+
+      .work-grid,
+      .services,
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      section {
+        padding: 90px 0;
+      }
+
+      .service {
+        font-size: 20px;
+      }
+
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <div class="container">
+      <div class="logo">EKIN YETKIN</div>
+
+      <ul>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+
+  <main>
+
+    <!-- HERO -->
+
+    <section class="hero">
+      <div class="container">
+
+        <h1>
+          VIDEO<br>
+          CREATOR
+        </h1>
+
+        <p>
+          Videographer & Content Creator creating visual content
+          for brands, businesses, events and social media.
+        </p>
+
+        <div class="hero-buttons">
+          <a class="button" href="#work">View My Work</a>
+          <a class="button" href="#contact">Contact</a>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- WORK -->
+
+    <section id="work">
+
+      <div class="container">
+
+        <div class="section-title">
+          Selected Work
+        </div>
+
+        <div class="work-grid">
+
+          <div>
+            <div class="work-card">
+              PROJECT IMAGE / VIDEO
+            </div>
+
+            <div class="work-info">
+              <h3>Social Media Content</h3>
+              <p>Video Production · Editing</p>
+            </div>
+          </div>
+
+
+          <div>
+            <div class="work-card">
+              PROJECT IMAGE / VIDEO
+            </div>
+
+            <div class="work-info">
+              <h3>Food & Commercial</h3>
+              <p>Videography · Content Production</p>
+            </div>
+          </div>
+
+
+          <div>
+            <div class="work-card">
+              PROJECT IMAGE / VIDEO
+            </div>
+
+            <div class="work-info">
+              <h3>Events</h3>
+              <p>Event Videography</p>
+            </div>
+          </div>
+
+
+          <div>
+            <div class="work-card">
+              PROJECT IMAGE / VIDEO
+            </div>
+
+            <div class="work-info">
+              <h3>Interviews</h3>
+              <p>Interview Production</p>
+            </div>
+          </div>
+
+
+          <div>
+            <div class="work-card">
+              PROJECT IMAGE / VIDEO
+            </div>
+
+            <div class="work-info">
+              <h3>Weddings</h3>
+              <p>Wedding Videography</p>
+            </div>
+          </div>
+
+
+          <div>
+            <div class="work-card">
+              PROJECT IMAGE / VIDEO
+            </div>
+
+            <div class="work-info">
+              <h3>Science & Technology</h3>
+              <p>Content Creation · Editing</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ABOUT -->
+
+    <section id="about">
+
+      <div class="container">
+
+        <div class="section-title">
+          About
+        </div>
+
+        <div class="about">
+
+          <h2>
+            I create videos
+            that make people
+            stop scrolling.
+          </h2>
+
+          <p>
+            I'm Ekin Yetkin, a videographer and content creator
+            working across social media, commercial productions,
+            events, interviews and digital content.
+          </p>
+
+          <p>
+            My background in science and content creation allows
+            me to combine technical knowledge with visual storytelling.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- SERVICES -->
+
+    <section id="services">
+
+      <div class="container">
+
+        <div class="section-title">
+          Services
+        </div>
+
+        <div class="services">
+
+          <div class="service">01 — Video Production</div>
+          <div class="service">02 — Social Media Content</div>
+          <div class="service">03 — Event Videography</div>
+          <div class="service">04 — Interview Production</div>
+          <div class="service">05 — Food & Product Video</div>
+          <div class="service">06 — Wedding Videography</div>
+          <div class="service">07 — Short-form Content</div>
+          <div class="service">08 — Video Editing</div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- SOCIAL STATS -->
+
+    <section>
+
+      <div class="container">
+
+        <div class="section-title">
+          Social Reach
+        </div>
+
+        <div class="stats">
+
+          <div class="stat">
+            <div class="stat-number">253K</div>
+            <div class="stat-label">YouTube Subscribers</div>
+          </div>
+
+          <div class="stat">
+            <div class="stat-number">56K</div>
+            <div class="stat-label">Instagram Followers</div>
+          </div>
+
+          <div class="stat">
+            <div class="stat-number">39K</div>
+            <div class="stat-label">TikTok Followers</div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- CONTACT -->
+
+    <section id="contact">
+
+      <div class="container">
+
+        <div class="section-title">
+          Contact
+        </div>
+
+        <div class="contact">
+
+          <h2>
+            LET'S<br>
+            WORK<br>
+            TOGETHER.
+          </h2>
+
+          <p>
+            Available for video production, social media content,
+            events and commercial projects.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <footer>
+
+    <div class="container">
+      © 2026 Ekin Yetkin
+    </div>
+
+  </footer>
+
+</body>
+</html>

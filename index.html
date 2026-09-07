@@ -2,7 +2,6 @@
 <html lang="tr">
 
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -45,6 +44,8 @@
             max-width: 100%;
             display: block;
         }
+
+        /* NAV */
 
         nav {
             position: fixed;
@@ -91,6 +92,8 @@
         .nav-links a:hover {
             color: #fff;
         }
+
+        /* SECTIONS */
 
         section {
             padding: 150px 5vw;
@@ -224,6 +227,52 @@
             background: #101010;
         }
 
+        /*
+         * ANA SAYFA ÖNİZLEME MEDYASI
+         */
+
+        .work-card-media {
+            position: absolute;
+            inset: 0;
+
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            opacity: .82;
+
+            transition:
+                transform .6s ease,
+                opacity .4s ease;
+
+            z-index: 0;
+        }
+
+        .work-card:hover .work-card-media {
+            transform: scale(1.045);
+            opacity: 1;
+        }
+
+        .work-card::after {
+            content: "";
+
+            position: absolute;
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    to top,
+                    rgba(0, 0, 0, .92) 0%,
+                    rgba(0, 0, 0, .55) 38%,
+                    rgba(0, 0, 0, .08) 100%
+                );
+
+            z-index: 1;
+
+            pointer-events: none;
+        }
+
         .work-card h3 {
             font-size: clamp(30px, 4vw, 58px);
             line-height: .95;
@@ -240,7 +289,7 @@
 
             max-width: 520px;
 
-            color: #777;
+            color: #b0b0b0;
 
             font-size: 14px;
             line-height: 1.6;
@@ -256,7 +305,7 @@
             right: 38px;
 
             font-size: 30px;
-            color: #555;
+            color: #ddd;
 
             transition:
                 color .2s ease,
@@ -270,37 +319,30 @@
             transform: translate(5px, -5px);
         }
 
-        /* ÜRÜN & YEMEK */
-
-        .food-card {
-            background: #050505;
-        }
-
-        .food-card::before {
-            content: "";
-
+        .work-card-loading {
             position: absolute;
             inset: 0;
 
-            background:
-                linear-gradient(
-                    to top,
-                    rgba(0, 0, 0, .82),
-                    rgba(0, 0, 0, .18)
-                ),
-                url("images/urun-yemek/IMG_3.jpg")
-                center center / cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-            opacity: .9;
+            color: #444;
 
-            transition:
-                transform .5s ease,
-                opacity .3s ease;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+
+            z-index: 0;
         }
 
-        .food-card:hover::before {
-            transform: scale(1.04);
-            opacity: 1;
+        .work-card-empty {
+            position: absolute;
+            inset: 0;
+
+            background: #080808;
+
+            z-index: 0;
         }
 
         /* SOSYAL MEDYA */
@@ -468,7 +510,6 @@
             font-size: clamp(50px, 9vw, 140px);
 
             line-height: .85;
-
             letter-spacing: -6px;
 
             text-transform: uppercase;
@@ -640,14 +681,12 @@
 
             footer {
                 padding: 30px 6vw;
-
                 flex-direction: column;
 
                 gap: 12px;
 
                 align-items: flex-start;
             }
-
         }
 
     </style>
@@ -750,10 +789,17 @@
             <div class="work-grid">
 
 
+                <!-- ÜRÜN & YEMEK -->
+
                 <a
                     href="gallery.html?category=urun-yemek"
-                    class="work-card food-card"
+                    class="work-card"
+                    data-category="urun-yemek"
                 >
+
+                    <div class="work-card-loading">
+                        Yükleniyor
+                    </div>
 
                     <span class="work-arrow">
                         ↗
@@ -772,10 +818,17 @@
                 </a>
 
 
+                <!-- MARKA & TANITIM -->
+
                 <a
                     href="gallery.html?category=marka-tanitim"
                     class="work-card"
+                    data-category="marka-tanitim"
                 >
+
+                    <div class="work-card-loading">
+                        Yükleniyor
+                    </div>
 
                     <span class="work-arrow">
                         ↗
@@ -794,10 +847,17 @@
                 </a>
 
 
+                <!-- ETKİNLİK -->
+
                 <a
                     href="gallery.html?category=etkinlik"
                     class="work-card"
+                    data-category="etkinlik"
                 >
+
+                    <div class="work-card-loading">
+                        Yükleniyor
+                    </div>
 
                     <span class="work-arrow">
                         ↗
@@ -815,10 +875,17 @@
                 </a>
 
 
+                <!-- RÖPORTAJ -->
+
                 <a
                     href="gallery.html?category=roportaj"
                     class="work-card"
+                    data-category="roportaj"
                 >
+
+                    <div class="work-card-loading">
+                        Yükleniyor
+                    </div>
 
                     <span class="work-arrow">
                         ↗
@@ -836,10 +903,17 @@
                 </a>
 
 
+                <!-- DÜĞÜN & NİKAH -->
+
                 <a
                     href="gallery.html?category=dugun-nikah"
                     class="work-card"
+                    data-category="dugun-nikah"
                 >
+
+                    <div class="work-card-loading">
+                        Yükleniyor
+                    </div>
 
                     <span class="work-arrow">
                         ↗
@@ -858,10 +932,17 @@
                 </a>
 
 
+                <!-- SOSYAL MEDYA -->
+
                 <a
                     href="gallery.html?category=sosyal-medya"
                     class="work-card"
+                    data-category="sosyal-medya"
                 >
+
+                    <div class="work-card-loading">
+                        Yükleniyor
+                    </div>
 
                     <span class="work-arrow">
                         ↗
@@ -1351,6 +1432,405 @@
         </span>
 
     </footer>
+
+
+    <script>
+
+        /*
+         * GITHUB AYARLARI
+         */
+
+        const GITHUB_USER = "ekinyetkin";
+        const GITHUB_REPO = "ekinyetkin.github.io";
+        const GITHUB_BRANCH = "main";
+
+
+        /*
+         * DESTEKLENEN DOSYA TÜRLERİ
+         */
+
+        const IMAGE_EXTENSIONS = [
+            "jpg",
+            "jpeg",
+            "png",
+            "webp",
+            "gif"
+        ];
+
+        const VIDEO_EXTENSIONS = [
+            "mp4",
+            "webm",
+            "mov"
+        ];
+
+
+        /*
+         * KATEGORİLER
+         */
+
+        const PREVIEW_CATEGORIES = [
+            "urun-yemek",
+            "marka-tanitim",
+            "etkinlik",
+            "roportaj",
+            "dugun-nikah",
+            "sosyal-medya"
+        ];
+
+
+        /*
+         * GITHUB'TAKİ DOSYANIN
+         * GITHUB PAGES URL'SİNİ OLUŞTUR
+         *
+         * Böylece medya doğrudan sitenin kendi
+         * domaininden yüklenir.
+         */
+
+        function getPageMediaUrl(path) {
+
+            return new URL(
+                path,
+                window.location.origin + "/"
+            ).href;
+
+        }
+
+
+        /*
+         * DOSYA UZANTISI
+         */
+
+        function getExtension(filename) {
+
+            return filename
+                .split(".")
+                .pop()
+                .toLowerCase();
+
+        }
+
+
+        /*
+         * KATEGORİNİN İLK MEDYASINI BUL
+         */
+
+        async function getFirstMedia(category) {
+
+            const apiUrl =
+                `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/images/${category}?ref=${GITHUB_BRANCH}`;
+
+            const response =
+                await fetch(apiUrl, {
+                    headers: {
+                        "Accept":
+                            "application/vnd.github+json"
+                    }
+                });
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Kategori okunamadı: " + category
+                );
+
+            }
+
+            const files =
+                await response.json();
+
+
+            const mediaFiles =
+                files
+                    .filter(
+                        file =>
+                            file.type === "file"
+                    )
+                    .filter(file => {
+
+                        const extension =
+                            getExtension(file.name);
+
+                        return (
+                            IMAGE_EXTENSIONS.includes(
+                                extension
+                            ) ||
+                            VIDEO_EXTENSIONS.includes(
+                                extension
+                            )
+                        );
+
+                    })
+                    .sort((a, b) =>
+                        a.name.localeCompare(
+                            b.name,
+                            undefined,
+                            {
+                                numeric: true,
+                                sensitivity: "base"
+                            }
+                        )
+                    );
+
+
+            return mediaFiles.length
+                ? mediaFiles[0]
+                : null;
+
+        }
+
+
+        /*
+         * FOTOĞRAF ÖNİZLEMESİ
+         */
+
+        function createImagePreview(
+            card,
+            file
+        ) {
+
+            const image =
+                document.createElement("img");
+
+            image.className =
+                "work-card-media";
+
+            image.src =
+                getPageMediaUrl(file.path);
+
+            image.alt = "";
+
+            image.loading = "lazy";
+
+            card.prepend(image);
+
+        }
+
+
+        /*
+         * VİDEO ÖNİZLEMESİ
+         *
+         * Sessiz + otomatik + döngü
+         * şeklinde çalışır.
+         */
+
+        function createVideoPreview(
+            card,
+            file
+        ) {
+
+            const video =
+                document.createElement("video");
+
+            video.className =
+                "work-card-media";
+
+            video.muted = true;
+            video.autoplay = true;
+            video.loop = true;
+            video.playsInline = true;
+            video.preload = "metadata";
+
+            video.setAttribute(
+                "muted",
+                ""
+            );
+
+            video.setAttribute(
+                "autoplay",
+                ""
+            );
+
+            video.setAttribute(
+                "loop",
+                ""
+            );
+
+            video.setAttribute(
+                "playsinline",
+                ""
+            );
+
+            const source =
+                document.createElement("source");
+
+            source.src =
+                getPageMediaUrl(file.path);
+
+            source.type =
+                getExtension(file.name) === "webm"
+                    ? "video/webm"
+                    : "video/mp4";
+
+            video.appendChild(source);
+
+            card.prepend(video);
+
+
+            /*
+             * Tarayıcı otomatik oynatmayı
+             * engellerse tekrar dene.
+             */
+
+            video.addEventListener(
+                "loadeddata",
+                () => {
+
+                    video.play()
+                        .catch(() => {});
+
+                }
+            );
+
+
+            video.addEventListener(
+                "error",
+                () => {
+
+                    video.remove();
+
+                }
+            );
+
+        }
+
+
+        /*
+         * KART ÖNİZLEMELERİNİ YÜKLE
+         */
+
+        async function loadCardPreviews() {
+
+            const cards =
+                document.querySelectorAll(
+                    ".work-card[data-category]"
+                );
+
+
+            for (const card of cards) {
+
+                const category =
+                    card.dataset.category;
+
+                try {
+
+                    const file =
+                        await getFirstMedia(
+                            category
+                        );
+
+
+                    const loading =
+                        card.querySelector(
+                            ".work-card-loading"
+                        );
+
+
+                    if (loading) {
+                        loading.remove();
+                    }
+
+
+                    /*
+                     * KLASÖRDE DOSYA YOKSA
+                     */
+
+                    if (!file) {
+
+                        const empty =
+                            document.createElement(
+                                "div"
+                            );
+
+                        empty.className =
+                            "work-card-empty";
+
+                        card.prepend(empty);
+
+                        continue;
+
+                    }
+
+
+                    const extension =
+                        getExtension(file.name);
+
+
+                    /*
+                     * FOTOĞRAF
+                     */
+
+                    if (
+                        IMAGE_EXTENSIONS.includes(
+                            extension
+                        )
+                    ) {
+
+                        createImagePreview(
+                            card,
+                            file
+                        );
+
+                    }
+
+
+                    /*
+                     * VİDEO
+                     */
+
+                    else if (
+                        VIDEO_EXTENSIONS.includes(
+                            extension
+                        )
+                    ) {
+
+                        createVideoPreview(
+                            card,
+                            file
+                        );
+
+                    }
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "Önizleme yüklenemedi:",
+                        category,
+                        error
+                    );
+
+
+                    const loading =
+                        card.querySelector(
+                            ".work-card-loading"
+                        );
+
+
+                    if (loading) {
+
+                        loading.textContent =
+                            "";
+
+                    }
+
+                }
+
+            }
+
+        }
+
+
+        /*
+         * SAYFA HAZIR OLUNCA BAŞLAT
+         */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            loadCardPreviews
+        );
+
+    </script>
 
 
 </body>

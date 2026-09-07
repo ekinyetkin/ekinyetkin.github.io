@@ -1,3 +1,53 @@
+Pasted text.txt
+Document
+
+Tamam. Kodun içinde tek tek yer aramana gerek yok. Mevcut gallery.html dosyanı dosyanın tamamını değiştirecek şekilde hazırladım.
+Yapacağın şey
+
+    GitHub'da repository'ne gir.
+
+    gallery.html dosyasına tıkla.
+
+    Sağ üstteki kalem (✏️) ikonuna bas. GitHub dosyaların doğrudan düzenlenmesine izin veriyor.
+
+    Kodun içine bir kere tıkla.
+
+    Ctrl + A yap.
+
+    Aşağıdaki dosyayı indir:
+
+    Düzeltilmiş gallery.html
+
+    Dosyayı açıp içindeki kodun tamamını kopyala.
+
+    GitHub'daki eski kodun üzerine Ctrl + V yap.
+
+    Aşağıya in → Commit changes.
+
+    Siteyi açıp Ctrl + F5 yap.
+
+Bu sürümde fotoğraf ve video dosya adları sitenin üzerinde görünmeyecek. GitHub'daki dosya isimlerine dokunmuyoruz; sadece web sitesinde gösterilmelerini kaldırdım. Mevcut dosyandaki file-name oluşturma kısmı zaten bu isimleri ekrana basıyordu.
+
+Yani kodda hiçbir şey bulmaya veya silmeye çalışma; komple değiştir.
+gallery.htmlHTML
+
+1de8d78c-85be-493e-8899-3c1bd23ad53d.png
+bu attıgın neden böyle gözüküyor bana düzgün kopyala yapıştır yapabileceğim formatta versene
+
+Evet. Önceki gönderim dosya olarak/render edilmiş, bu yüzden sende kod yerine önizleme gibi görünmüş. Aşağıdaki tamamen düz kod bloğu; direkt gallery.html içine kopyalayıp yapıştırabilirsin.
+
+Bu sürümde:
+
+    Görsel dosya adları artık görünmüyor.
+
+    Video üzerinde sadece “Video” etiketi var.
+
+    Masaüstünde videoyu tam ekrana alınca kırpılmıyor.
+
+    Kategori klasöründeki fotoğraf/video dosyalarını otomatik bulmaya devam ediyor.
+
+GitHub'da gallery.html → kalem simgesi → kod alanına tıkla → Ctrl+A → aşağıdaki kodun tamamını yapıştır → Commit changes. GitHub'ın web editörü doğrudan dosyayı düzenleyip commit etmeyi destekliyor.
+
 <!DOCTYPE html>
 <html lang="tr">
 
@@ -800,3 +850,876 @@
 </body>
 
 </html>
+
+Şimdi yapacağın
+
+    GitHub → gallery.html
+
+    Kalem simgesine bas.
+
+    Kod alanına tıkla.
+
+    Ctrl + A
+
+    Yukarıdaki kodun tamamını yapıştır.
+
+    Aşağıdan Commit changes.
+
+    Sitede Ctrl + F5 yap.
+
+Bu sefer kodu kod bloğu olarak verdim; ekran görüntüsündeki gibi HTML önizlemesi olmayacak.
+
+mouse görselin üzerine gelince hafif bir zoom in yapıyor ya görsel aynısını videoda da yaparken aşağı bardaki tam ekran yap duraklat oynat gibi tuşlar da zoomlanıyor ve tıklanmıyor
+
+Sorunun nedeni net: hover zoom efekti doğrudan <video> elementine uygulanıyor. Tarayıcının oynat/duraklat/tam ekran kontrolleri de video elementinin parçası olduğu için onlar da scale() ile büyüyor. transform uygulanınca bu kontrollerin de büyümesi normal.
+
+Burada iki seçenek var:
+1. En temiz çözüm — bunu öneriyorum
+
+Fotoğraflar hover'da zoom yapacak, videolar zoom yapmayacak. Video kontrolleri tamamen normal kalacak.
+
+Senin mevcut gallery.html dosyanı buna göre düzelttim:
+
+Düzeltilmiş gallery.html dosyasını indir
+
+GitHub'da:
+
+    gallery.html → kalem simgesi
+
+    Kod alanına tıkla
+
+    Ctrl + A
+
+    İndirdiğim dosyanın içeriğini yapıştır
+
+    Commit changes
+
+    Sitede Ctrl + F5
+
+2. Video da fotoğraf gibi gerçekten zoom yapsın
+
+Bu da yapılabilir ama tarayıcının kendi video kontrollerini kullanarak düzgün yapılamaz. Çünkü video elementini büyüttüğümüzde kontroller de büyüyor.
+
+Bunun için videonun kendi controls sistemini kapatıp kendi oynat/duraklat, ses, süre çubuğu ve tam ekran kontrollerimizi oluşturmamız gerekir. Böylece:
+
+    Video görüntüsü hover'da zoom olur.
+
+    Kontroller zoom olmaz.
+
+    Tam ekran düzgün çalışır.
+
+    Kontroller tamamen sitenin tasarımına uygun hale getirilebilir.
+
+Yani 2. seçenek daha profesyonel, fakat biraz daha fazla kod gerektiriyor.
+
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Ekin Yetkin — Çalışmalar</title>
+
+    <meta
+        name="description"
+        content="Ekin Yetkin — Görsel içerik çalışmaları."
+    >
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #050505;
+            color: #f2f2f2;
+            font-family: Arial, Helvetica, sans-serif;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 78px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 5vw;
+
+            background: rgba(5, 5, 5, .88);
+            backdrop-filter: blur(12px);
+
+            border-bottom: 1px solid #202020;
+
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .back {
+            font-size: 12px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #888;
+
+            transition: color .2s ease;
+        }
+
+        .back:hover {
+            color: #fff;
+        }
+
+        main {
+            padding: 160px 5vw 100px;
+        }
+
+        .category-label {
+            font-size: 11px;
+            letter-spacing: 3px;
+            color: #666;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            font-size: clamp(55px, 9vw, 130px);
+            line-height: .85;
+            letter-spacing: -6px;
+            text-transform: uppercase;
+            margin-bottom: 80px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 2px;
+            background: #202020;
+        }
+
+        .gallery-item {
+            position: relative;
+            background: #080808;
+            overflow: hidden;
+
+            cursor: pointer;
+        }
+
+        .gallery-item img,
+        .gallery-item video {
+            width: 100%;
+            height: 100%;
+            min-height: 350px;
+
+            display: block;
+
+            object-fit: cover;
+
+            transition:
+                transform .5s ease,
+                opacity .3s ease;
+        }
+
+        /* Sadece fotoğraflar hover'da hafif zoom yapar.
+           Videoya transform uygulanmaz; böylece tarayıcının
+           oynat/duraklat/tam ekran kontrolleri zoomlanmaz. */
+        .gallery-item:hover img {
+            transform: scale(1.025);
+        }
+
+        .video-item {
+            cursor: default;
+        }
+
+        .video-item video {
+            cursor: pointer;
+        }
+
+        /* Tam ekranda videonun kırpılıp yakınlaşmasını engelle */
+        .video-item video:fullscreen {
+            width: 100%;
+            height: 100%;
+            min-height: 0;
+            object-fit: contain !important;
+            transform: none !important;
+            background: #000;
+        }
+
+        .video-item video:-webkit-full-screen {
+            width: 100%;
+            height: 100%;
+            min-height: 0;
+            object-fit: contain !important;
+            transform: none !important;
+            background: #000;
+        }
+
+        .video-item video:-moz-full-screen {
+            width: 100%;
+            height: 100%;
+            min-height: 0;
+            object-fit: contain !important;
+            transform: none !important;
+            background: #000;
+        }
+
+        .gallery-item:hover .file-name {
+            opacity: 1;
+        }
+
+        .video-label {
+            position: absolute;
+            top: 18px;
+            left: 18px;
+
+            font-size: 10px;
+            letter-spacing: 2px;
+
+            padding: 7px 10px;
+
+            background: rgba(0,0,0,.65);
+
+            text-transform: uppercase;
+
+            pointer-events: none;
+        }
+
+        .loading {
+            color: #666;
+            font-size: 14px;
+            padding: 80px 0;
+        }
+
+        .empty {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.7;
+            padding: 60px 0;
+        }
+
+        .error {
+            color: #777;
+            font-size: 14px;
+            line-height: 1.7;
+            padding: 60px 0;
+        }
+
+        /* LIGHTBOX */
+
+        .lightbox {
+            position: fixed;
+            inset: 0;
+
+            background: rgba(0,0,0,.94);
+
+            display: none;
+            align-items: center;
+            justify-content: center;
+
+            padding: 40px;
+
+            z-index: 3000;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 94vw;
+            max-height: 90vh;
+
+            object-fit: contain;
+        }
+
+        .lightbox-close {
+            position: fixed;
+            top: 25px;
+            right: 30px;
+
+            font-size: 32px;
+            font-weight: 300;
+
+            color: #aaa;
+
+            cursor: pointer;
+
+            transition: color .2s ease;
+        }
+
+        .lightbox-close:hover {
+            color: #fff;
+        }
+
+        @media (max-width: 800px) {
+
+            nav {
+                height: 68px;
+                padding: 0 6vw;
+            }
+
+            main {
+                padding: 125px 6vw 70px;
+            }
+
+            h1 {
+                font-size: 14vw;
+                letter-spacing: -4px;
+                margin-bottom: 50px;
+            }
+
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-item img,
+            .gallery-item video {
+                min-height: 280px;
+            }
+
+            .lightbox {
+                padding: 15px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <nav>
+
+        <a href="index.html" class="logo">
+            EKİN YETKİN
+        </a>
+
+        <a href="index.html#work" class="back">
+            ← Çalışmalar
+        </a>
+
+    </nav>
+
+
+    <main>
+
+        <div class="category-label" id="categoryLabel">
+            Çalışmalar
+        </div>
+
+        <h1 id="categoryTitle">
+            Yükleniyor
+        </h1>
+
+        <div id="gallery" class="gallery">
+
+            <div class="loading">
+                Çalışmalar yükleniyor...
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- LIGHTBOX -->
+
+    <div
+        id="lightbox"
+        class="lightbox"
+    >
+
+        <div
+            id="lightboxClose"
+            class="lightbox-close"
+        >
+            ×
+        </div>
+
+        <img
+            id="lightboxImage"
+            src=""
+            alt=""
+        >
+
+    </div>
+
+
+    <script>
+
+        /*
+         * GITHUB AYARLARI
+         */
+
+        const GITHUB_USER = "ekinyetkin";
+
+        const GITHUB_REPO = "ekinyetkin.github.io";
+
+        const GITHUB_BRANCH = "main";
+
+
+        /*
+         * KATEGORİLER
+         */
+
+        const categories = {
+
+            "urun-yemek": {
+                title: "Ürün & Yemek",
+                label: "Ürün & Yemek"
+            },
+
+            "marka-tanitim": {
+                title: "Marka & Tanıtım",
+                label: "Marka & Tanıtım"
+            },
+
+            "etkinlik": {
+                title: "Etkinlik",
+                label: "Etkinlik"
+            },
+
+            "roportaj": {
+                title: "Röportaj",
+                label: "Röportaj"
+            },
+
+            "dugun-nikah": {
+                title: "Düğün & Nikah",
+                label: "Düğün & Nikah"
+            },
+
+            "sosyal-medya": {
+                title: "Sosyal Medya",
+                label: "Sosyal Medya"
+            }
+
+        };
+
+
+        /*
+         * URL'DEN KATEGORİYİ AL
+         */
+
+        const params =
+            new URLSearchParams(window.location.search);
+
+        const category =
+            params.get("category");
+
+
+        /*
+         * GEÇERLİ KATEGORİ KONTROLÜ
+         */
+
+        if (!categories[category]) {
+
+            document.title =
+                "Ekin Yetkin — Çalışmalar";
+
+            document.getElementById("categoryTitle")
+                .textContent = "Kategori bulunamadı";
+
+            document.getElementById("categoryLabel")
+                .textContent = "Hata";
+
+        } else {
+
+            const categoryData =
+                categories[category];
+
+            document.title =
+                "Ekin Yetkin — " + categoryData.title;
+
+            document.getElementById("categoryTitle")
+                .textContent = categoryData.title;
+
+            document.getElementById("categoryLabel")
+                .textContent = categoryData.label;
+
+            loadGallery(category);
+
+        }
+
+
+        /*
+         * DESTEKLENEN DOSYA TÜRLERİ
+         */
+
+        const imageExtensions = [
+            "jpg",
+            "jpeg",
+            "png",
+            "webp",
+            "gif"
+        ];
+
+        const videoExtensions = [
+            "mp4",
+            "webm",
+            "mov"
+        ];
+
+
+        /*
+         * GALERİYİ GITHUB'TAN ÇEK
+         */
+
+        async function loadGallery(category) {
+
+            const gallery =
+                document.getElementById("gallery");
+
+            const apiUrl =
+                `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/images/${category}?ref=${GITHUB_BRANCH}`;
+
+            try {
+
+                const response =
+                    await fetch(apiUrl, {
+                        headers: {
+                            "Accept":
+                                "application/vnd.github+json"
+                        }
+                    });
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "GitHub klasörü okunamadı."
+                    );
+
+                }
+
+                const files =
+                    await response.json();
+
+
+                /*
+                 * SADECE FOTOĞRAF VE VİDEOLAR
+                 */
+
+                const mediaFiles =
+                    files
+                        .filter(file => file.type === "file")
+                        .filter(file => {
+
+                            const extension =
+                                getExtension(file.name);
+
+                            return (
+                                imageExtensions.includes(extension) ||
+                                videoExtensions.includes(extension)
+                            );
+
+                        })
+                        .sort((a, b) =>
+                            a.name.localeCompare(
+                                b.name,
+                                undefined,
+                                {
+                                    numeric: true,
+                                    sensitivity: "base"
+                                }
+                            )
+                        );
+
+
+                gallery.innerHTML = "";
+
+
+                if (mediaFiles.length === 0) {
+
+                    gallery.innerHTML = `
+                        <div class="empty">
+                            Bu kategoride henüz çalışma bulunmuyor.
+                        </div>
+                    `;
+
+                    return;
+
+                }
+
+
+                /*
+                 * HER DOSYAYI GALERİYE EKLE
+                 */
+
+                mediaFiles.forEach(file => {
+
+                    const extension =
+                        getExtension(file.name);
+
+                    if (
+                        imageExtensions.includes(extension)
+                    ) {
+
+                        createImage(file);
+
+                    } else if (
+                        videoExtensions.includes(extension)
+                    ) {
+
+                        createVideo(file);
+
+                    }
+
+                });
+
+            }
+
+            catch (error) {
+
+                console.error(error);
+
+                gallery.innerHTML = `
+                    <div class="error">
+                        Çalışmalar yüklenirken bir hata oluştu.
+                        <br><br>
+                        Lütfen birkaç saniye sonra tekrar deneyin.
+                    </div>
+                `;
+
+            }
+
+        }
+
+
+        /*
+         * UZANTIYI AL
+         */
+
+        function getExtension(filename) {
+
+            return filename
+                .split(".")
+                .pop()
+                .toLowerCase();
+
+        }
+
+
+        /*
+         * FOTOĞRAF OLUŞTUR
+         */
+
+        function createImage(file) {
+
+            const item =
+                document.createElement("div");
+
+            item.className =
+                "gallery-item";
+
+
+            const image =
+                document.createElement("img");
+
+            image.src =
+                getRawUrl(file.path);
+
+            image.alt =
+                file.name;
+
+            image.loading =
+                "lazy";
+item.appendChild(image);
+
+
+            item.addEventListener(
+                "click",
+                () => {
+
+                    openLightbox(
+                        image.src,
+                        file.name
+                    );
+
+                }
+            );
+
+
+            document
+                .getElementById("gallery")
+                .appendChild(item);
+
+        }
+
+
+        /*
+         * VİDEO OLUŞTUR
+         */
+
+        function createVideo(file) {
+
+            const item =
+                document.createElement("div");
+
+            item.className =
+                "gallery-item video-item";
+
+
+            const video =
+                document.createElement("video");
+
+            video.src =
+                getRawUrl(file.path);
+
+            video.controls =
+                true;
+
+            video.preload =
+                "metadata";
+
+            video.playsInline =
+                true;
+
+
+            const label =
+                document.createElement("div");
+
+            label.className =
+                "video-label";
+
+            label.textContent =
+                "Video";
+item.appendChild(video);
+
+            item.appendChild(label);
+
+
+            document
+                .getElementById("gallery")
+                .appendChild(item);
+
+        }
+
+
+        /*
+         * RAW GITHUB URL
+         */
+
+        function getRawUrl(path) {
+
+            return `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${path}`;
+
+        }
+
+
+        /*
+         * LIGHTBOX
+         */
+
+        function openLightbox(src, alt) {
+
+            const lightbox =
+                document.getElementById("lightbox");
+
+            const image =
+                document.getElementById("lightboxImage");
+
+            image.src =
+                src;
+
+            image.alt =
+                alt;
+
+            lightbox.classList.add("active");
+
+        }
+
+
+        /*
+         * LIGHTBOX KAPAT
+         */
+
+        function closeLightbox() {
+
+            document
+                .getElementById("lightbox")
+                .classList.remove("active");
+
+            document
+                .getElementById("lightboxImage")
+                .src = "";
+
+        }
+
+
+        document
+            .getElementById("lightboxClose")
+            .addEventListener(
+                "click",
+                closeLightbox
+            );
+
+
+        document
+            .getElementById("lightbox")
+            .addEventListener(
+                "click",
+                event => {
+
+                    if (
+                        event.target.id ===
+                        "lightbox"
+                    ) {
+
+                        closeLightbox();
+
+                    }
+
+                }
+            );
+
+
+        document.addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.key === "Escape"
+                ) {
+
+                    closeLightbox();
+
+                }
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>
+
+gallery-video-controls-fixed.htmlHTML
+
+

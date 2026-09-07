@@ -1,12 +1,24 @@
 <!DOCTYPE html>
 <html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Çalışmalar — Ekin Yetkin</title>
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Ekin Yetkin — Çalışmalar</title>
+
+    <meta
+        name="description"
+        content="Ekin Yetkin — Görsel içerik çalışmaları."
+    >
 
     <style>
+
         * {
             margin: 0;
             padding: 0;
@@ -19,9 +31,9 @@
 
         body {
             background: #050505;
-            color: #f5f5f5;
+            color: #f2f2f2;
             font-family: Arial, Helvetica, sans-serif;
-            min-height: 100vh;
+            overflow-x: hidden;
         }
 
         a {
@@ -29,77 +41,78 @@
             text-decoration: none;
         }
 
-        /* =========================
-           HEADER
-        ========================= */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 78px;
 
-        header {
-            padding: 32px 5vw;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #222;
+            justify-content: space-between;
+
+            padding: 0 5vw;
+
+            background: rgba(5, 5, 5, .88);
+            backdrop-filter: blur(12px);
+
+            border-bottom: 1px solid #202020;
+
+            z-index: 1000;
         }
 
         .logo {
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 700;
-            letter-spacing: 0.12em;
+            letter-spacing: 1px;
         }
 
         .back {
             font-size: 12px;
-            letter-spacing: 0.12em;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
-            color: #999;
-            transition: color .25s ease;
+            color: #888;
+
+            transition: color .2s ease;
         }
 
         .back:hover {
             color: #fff;
         }
 
-        /* =========================
-           HERO
-        ========================= */
-
-        .hero {
-            padding: 100px 5vw 70px;
-            border-bottom: 1px solid #222;
+        main {
+            padding: 160px 5vw 100px;
         }
 
-        .eyebrow {
+        .category-label {
             font-size: 11px;
-            letter-spacing: .18em;
+            letter-spacing: 3px;
+            color: #666;
             text-transform: uppercase;
-            color: #777;
             margin-bottom: 25px;
         }
 
         h1 {
-            font-size: clamp(50px, 9vw, 150px);
-            line-height: .88;
-            letter-spacing: -.055em;
-            font-weight: 700;
-            max-width: 1100px;
+            font-size: clamp(55px, 9vw, 130px);
+            line-height: .85;
+            letter-spacing: -6px;
+            text-transform: uppercase;
+            margin-bottom: 80px;
         }
 
-        /* =========================
-           GALLERY
-        ========================= */
-
         .gallery {
-            padding: 60px 5vw 100px;
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 18px;
+            gap: 2px;
+            background: #202020;
         }
 
         .gallery-item {
             position: relative;
+            background: #080808;
             overflow: hidden;
-            background: #111;
-            min-height: 350px;
+            cursor: pointer;
         }
 
         .gallery-item img,
@@ -107,17 +120,17 @@
             width: 100%;
             height: 100%;
             min-height: 350px;
+
             display: block;
+
             object-fit: cover;
+
             transition:
                 transform .5s ease,
                 opacity .3s ease;
         }
 
-        .gallery-item:hover img {
-            transform: scale(1.025);
-        }
-
+        .gallery-item:hover img,
         .gallery-item:hover video {
             transform: scale(1.025);
         }
@@ -130,10 +143,7 @@
             cursor: pointer;
         }
 
-        /* =========================
-           FULLSCREEN VIDEO
-        ========================= */
-
+        /* Tam ekranda videonun kırpılmasını engeller */
         .video-item video:fullscreen {
             width: 100%;
             height: 100%;
@@ -161,19 +171,58 @@
             background: #000;
         }
 
-        /* =========================
-           LIGHTBOX
-        ========================= */
+        .video-label {
+            position: absolute;
+            top: 18px;
+            left: 18px;
+
+            font-size: 10px;
+            letter-spacing: 2px;
+
+            padding: 7px 10px;
+
+            background: rgba(0, 0, 0, .65);
+
+            text-transform: uppercase;
+
+            pointer-events: none;
+        }
+
+        .loading {
+            color: #666;
+            font-size: 14px;
+            padding: 80px 0;
+        }
+
+        .empty {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.7;
+            padding: 60px 0;
+        }
+
+        .error {
+            color: #777;
+            font-size: 14px;
+            line-height: 1.7;
+            padding: 60px 0;
+        }
+
+        /* LIGHTBOX */
 
         .lightbox {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, .96);
+
+            background: rgba(0, 0, 0, .94);
+
             display: none;
             align-items: center;
             justify-content: center;
-            z-index: 9999;
-            padding: 30px;
+
+            padding: 40px;
+
+            z-index: 3000;
         }
 
         .lightbox.active {
@@ -181,217 +230,226 @@
         }
 
         .lightbox img {
-            max-width: 95vw;
-            max-height: 92vh;
+            max-width: 94vw;
+            max-height: 90vh;
+
             object-fit: contain;
         }
 
         .lightbox-close {
-            position: absolute;
+            position: fixed;
             top: 25px;
             right: 30px;
-            font-size: 35px;
-            line-height: 1;
-            color: #fff;
-            cursor: pointer;
+
+            font-size: 32px;
             font-weight: 300;
+
+            color: #aaa;
+
+            cursor: pointer;
+
+            transition: color .2s ease;
         }
 
-        /* =========================
-           STATUS
-        ========================= */
-
-        .status {
-            min-height: 300px;
-            padding: 100px 5vw;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #777;
-            font-size: 13px;
-            letter-spacing: .08em;
-            text-transform: uppercase;
-            text-align: center;
+        .lightbox-close:hover {
+            color: #fff;
         }
-
-        /* =========================
-           MOBILE
-        ========================= */
 
         @media (max-width: 800px) {
 
-            header {
-                padding: 25px 5vw;
+            nav {
+                height: 68px;
+                padding: 0 6vw;
             }
 
-            .hero {
-                padding: 70px 5vw 50px;
+            main {
+                padding: 125px 6vw 70px;
             }
 
             h1 {
-                font-size: clamp(45px, 14vw, 90px);
+                font-size: 14vw;
+                letter-spacing: -4px;
+                margin-bottom: 50px;
             }
 
             .gallery {
-                padding: 35px 5vw 70px;
                 grid-template-columns: 1fr;
-                gap: 12px;
-            }
-
-            .gallery-item {
-                min-height: 300px;
             }
 
             .gallery-item img,
             .gallery-item video {
-                min-height: 300px;
+                min-height: 280px;
             }
 
             .lightbox {
                 padding: 15px;
             }
 
-            .lightbox-close {
-                top: 15px;
-                right: 20px;
-            }
         }
+
     </style>
+
 </head>
 
 <body>
 
-    <header>
+    <nav>
+
         <a href="index.html" class="logo">
             EKİN YETKİN
         </a>
 
-        <a href="index.html" class="back">
-            ← Geri
+        <a href="index.html#work" class="back">
+            ← Çalışmalar
         </a>
-    </header>
 
-    <section class="hero">
-        <div class="eyebrow" id="categoryLabel">
-            ÇALIŞMALAR
+    </nav>
+
+
+    <main>
+
+        <div class="category-label" id="categoryLabel">
+            Çalışmalar
         </div>
 
         <h1 id="categoryTitle">
-            YÜKLENİYOR...
+            Yükleniyor
         </h1>
-    </section>
 
-    <main>
-        <div class="status" id="status">
-            ÇALIŞMALAR YÜKLENİYOR...
+        <div id="gallery" class="gallery">
+
+            <div class="loading">
+                Çalışmalar yükleniyor...
+            </div>
+
         </div>
 
-        <section class="gallery" id="gallery"></section>
     </main>
+
 
     <!-- LIGHTBOX -->
 
-    <div class="lightbox" id="lightbox">
-        <div class="lightbox-close" id="lightboxClose">
+    <div
+        id="lightbox"
+        class="lightbox"
+    >
+
+        <div
+            id="lightboxClose"
+            class="lightbox-close"
+        >
             ×
         </div>
 
-        <img id="lightboxImage" src="" alt="">
+        <img
+            id="lightboxImage"
+            src=""
+            alt=""
+        >
+
     </div>
+
 
     <script>
 
-        /* =========================
-           AYARLAR
-        ========================= */
+        /*
+         * GITHUB AYARLARI
+         */
 
-        const repoOwner = "ekinyetkin";
-        const repoName = "ekinyetkin.github.io";
-        const branch = "main";
+        const GITHUB_USER = "ekinyetkin";
+
+        const GITHUB_REPO = "ekinyetkin.github.io";
+
+        const GITHUB_BRANCH = "main";
+
+
+        /*
+         * KATEGORİLER
+         */
 
         const categories = {
 
             "urun-yemek": {
-                title: "ÜRÜN & YEMEK",
-                label: "ÇALIŞMALAR"
+                title: "Ürün & Yemek",
+                label: "Ürün & Yemek"
             },
 
             "marka-tanitim": {
-                title: "MARKA & TANITIM",
-                label: "ÇALIŞMALAR"
+                title: "Marka & Tanıtım",
+                label: "Marka & Tanıtım"
             },
 
             "etkinlik": {
-                title: "ETKİNLİK",
-                label: "ÇALIŞMALAR"
+                title: "Etkinlik",
+                label: "Etkinlik"
             },
 
             "roportaj": {
-                title: "RÖPORTAJ",
-                label: "ÇALIŞMALAR"
+                title: "Röportaj",
+                label: "Röportaj"
             },
 
             "dugun-nikah": {
-                title: "DÜĞÜN & NİKAH",
-                label: "ÇALIŞMALAR"
+                title: "Düğün & Nikah",
+                label: "Düğün & Nikah"
             },
 
             "sosyal-medya": {
-                title: "SOSYAL MEDYA",
-                label: "ÇALIŞMALAR"
+                title: "Sosyal Medya",
+                label: "Sosyal Medya"
             }
 
         };
 
 
-        /* =========================
-           CATEGORY
-        ========================= */
+        /*
+         * URL'DEN KATEGORİYİ AL
+         */
 
-        const params = new URLSearchParams(window.location.search);
+        const params =
+            new URLSearchParams(window.location.search);
 
-        const category = params.get("category");
-
-        const categoryData = categories[category];
-
-        const categoryTitle =
-            document.getElementById("categoryTitle");
-
-        const categoryLabel =
-            document.getElementById("categoryLabel");
-
-        const gallery =
-            document.getElementById("gallery");
-
-        const status =
-            document.getElementById("status");
+        const category =
+            params.get("category");
 
 
-        if (!categoryData) {
+        /*
+         * GEÇERLİ KATEGORİ KONTROLÜ
+         */
 
-            categoryLabel.textContent = "HATA";
+        if (!categories[category]) {
 
-            categoryTitle.textContent = "KATEGORİ BULUNAMADI";
+            document.title =
+                "Ekin Yetkin — Çalışmalar";
 
-            status.textContent =
-                "Geçerli bir kategori seçilmedi.";
+            document.getElementById("categoryTitle")
+                .textContent = "Kategori bulunamadı";
+
+            document.getElementById("categoryLabel")
+                .textContent = "Hata";
 
         } else {
 
-            categoryLabel.textContent =
-                categoryData.label;
+            const categoryData =
+                categories[category];
 
-            categoryTitle.textContent =
-                categoryData.title;
+            document.title =
+                "Ekin Yetkin — " + categoryData.title;
+
+            document.getElementById("categoryTitle")
+                .textContent = categoryData.title;
+
+            document.getElementById("categoryLabel")
+                .textContent = categoryData.label;
 
             loadGallery(category);
 
         }
 
 
-        /* =========================
-           DOSYA UZANTILARI
-        ========================= */
+        /*
+         * DESTEKLENEN DOSYA TÜRLERİ
+         */
 
         const imageExtensions = [
             "jpg",
@@ -408,72 +466,89 @@
         ];
 
 
-        /* =========================
-           GITHUB API
-        ========================= */
+        /*
+         * GALERİYİ GITHUB'TAN ÇEK
+         */
 
         async function loadGallery(category) {
 
+            const gallery =
+                document.getElementById("gallery");
+
             const apiUrl =
-                `https://api.github.com/repos/${repoOwner}/${repoName}/contents/images/${category}?ref=${branch}`;
+                `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/images/${category}?ref=${GITHUB_BRANCH}`;
 
             try {
 
                 const response =
-                    await fetch(apiUrl);
+                    await fetch(apiUrl, {
+                        headers: {
+                            "Accept":
+                                "application/vnd.github+json"
+                        }
+                    });
 
                 if (!response.ok) {
-                    throw new Error("GitHub API hatası");
+
+                    throw new Error(
+                        "GitHub klasörü okunamadı."
+                    );
+
                 }
 
                 const files =
                     await response.json();
 
+
+                /*
+                 * SADECE FOTOĞRAF VE VİDEOLAR
+                 */
+
                 const mediaFiles =
-                    files.filter(file => {
+                    files
+                        .filter(file => file.type === "file")
+                        .filter(file => {
 
-                        if (file.type !== "file") {
-                            return false;
-                        }
+                            const extension =
+                                getExtension(file.name);
 
-                        const extension =
-                            getExtension(file.name);
+                            return (
+                                imageExtensions.includes(extension) ||
+                                videoExtensions.includes(extension)
+                            );
 
-                        return (
-                            imageExtensions.includes(extension) ||
-                            videoExtensions.includes(extension)
+                        })
+                        .sort((a, b) =>
+                            a.name.localeCompare(
+                                b.name,
+                                undefined,
+                                {
+                                    numeric: true,
+                                    sensitivity: "base"
+                                }
+                            )
                         );
-
-                    });
-
-
-                /* =========================
-                   DOSYA SIRALAMA
-                ========================= */
-
-                mediaFiles.sort((a, b) => {
-
-                    return naturalSort(
-                        a.name,
-                        b.name
-                    );
-
-                });
 
 
                 gallery.innerHTML = "";
 
+
                 if (mediaFiles.length === 0) {
 
-                    status.textContent =
-                        "Bu kategoride henüz çalışma bulunmuyor.";
+                    gallery.innerHTML = `
+                        <div class="empty">
+                            Bu kategoride henüz çalışma bulunmuyor.
+                        </div>
+                    `;
 
                     return;
 
                 }
 
 
-                status.style.display = "none";
+                /*
+                 * HER DOSYAYI GALERİYE EKLE
+                 */
 
                 mediaFiles.forEach(file => {
 
@@ -502,17 +577,22 @@
 
                 console.error(error);
 
-                status.textContent =
-                    "Çalışmalar yüklenirken bir hata oluştu.";
+                gallery.innerHTML = `
+                    <div class="error">
+                        Çalışmalar yüklenirken bir hata oluştu.
+                        <br><br>
+                        Lütfen birkaç saniye sonra tekrar deneyin.
+                    </div>
+                `;
 
             }
 
         }
 
 
-        /* =========================
-           EXTENSION
-        ========================= */
+        /*
+         * UZANTIYI AL
+         */
 
         function getExtension(filename) {
 
@@ -524,20 +604,9 @@
         }
 
 
-        /* =========================
-           RAW URL
-        ========================= */
-
-        function getRawUrl(path) {
-
-            return `https://raw.githubusercontent.com/${repoOwner}/${repoName}/${branch}/${path}`;
-
-        }
-
-
-        /* =========================
-           IMAGE
-        ========================= */
+        /*
+         * FOTOĞRAF OLUŞTUR
+         */
 
         function createImage(file) {
 
@@ -560,30 +629,32 @@
             image.loading =
                 "lazy";
 
+            item.appendChild(image);
 
-            image.addEventListener(
+
+            item.addEventListener(
                 "click",
                 () => {
 
                     openLightbox(
                         image.src,
-                        image.alt
+                        file.name
                     );
 
                 }
             );
 
 
-            item.appendChild(image);
-
-            gallery.appendChild(item);
+            document
+                .getElementById("gallery")
+                .appendChild(item);
 
         }
 
 
-        /* =========================
-           VIDEO
-        ========================= */
+        /*
+         * VİDEO OLUŞTUR
+         */
 
         function createVideo(file) {
 
@@ -610,76 +681,103 @@
                 true;
 
 
+            const label =
+                document.createElement("div");
+
+            label.className =
+                "video-label";
+
+            label.textContent =
+                "Video";
+
             item.appendChild(video);
 
-            gallery.appendChild(item);
+            item.appendChild(label);
+
+
+            document
+                .getElementById("gallery")
+                .appendChild(item);
 
         }
 
 
-        /* =========================
-           LIGHTBOX
-        ========================= */
+        /*
+         * RAW GITHUB URL
+         */
 
-        const lightbox =
-            document.getElementById("lightbox");
+        function getRawUrl(path) {
 
-        const lightboxImage =
-            document.getElementById("lightboxImage");
+            return `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${path}`;
 
-        const lightboxClose =
-            document.getElementById("lightboxClose");
+        }
 
+
+        /*
+         * LIGHTBOX
+         */
 
         function openLightbox(src, alt) {
 
-            lightboxImage.src =
+            const lightbox =
+                document.getElementById("lightbox");
+
+            const image =
+                document.getElementById("lightboxImage");
+
+            image.src =
                 src;
 
-            lightboxImage.alt =
+            image.alt =
                 alt;
 
             lightbox.classList.add("active");
 
-            document.body.style.overflow =
-                "hidden";
-
         }
 
+
+        /*
+         * LIGHTBOX KAPAT
+         */
 
         function closeLightbox() {
 
-            lightbox.classList.remove("active");
+            document
+                .getElementById("lightbox")
+                .classList.remove("active");
 
-            lightboxImage.src =
-                "";
-
-            document.body.style.overflow =
-                "";
+            document
+                .getElementById("lightboxImage")
+                .src = "";
 
         }
 
 
-        lightboxClose.addEventListener(
-            "click",
-            closeLightbox
-        );
+        document
+            .getElementById("lightboxClose")
+            .addEventListener(
+                "click",
+                closeLightbox
+            );
 
 
-        lightbox.addEventListener(
-            "click",
-            event => {
+        document
+            .getElementById("lightbox")
+            .addEventListener(
+                "click",
+                event => {
 
-                if (
-                    event.target === lightbox
-                ) {
+                    if (
+                        event.target.id ===
+                        "lightbox"
+                    ) {
 
-                    closeLightbox();
+                        closeLightbox();
+
+                    }
 
                 }
-
-            }
-        );
+            );
 
 
         document.addEventListener(
@@ -697,25 +795,8 @@
             }
         );
 
-
-        /* =========================
-           NATURAL SORT
-        ========================= */
-
-        function naturalSort(a, b) {
-
-            return a.localeCompare(
-                b,
-                undefined,
-                {
-                    numeric: true,
-                    sensitivity: "base"
-                }
-            );
-
-        }
-
     </script>
 
 </body>
+
 </html>

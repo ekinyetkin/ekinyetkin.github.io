@@ -33,6 +33,31 @@
             color: #f2f2f2;
             font-family: Arial, Helvetica, sans-serif;
             overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    rgba(0, 0, 0, .78),
+                    rgba(0, 0, 0, .78)
+                ),
+                url("images/background.jpg")
+                center center / cover no-repeat;
+
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        nav,
+        main,
+        footer {
+            position: relative;
+            z-index: 1;
         }
 
         a {
@@ -1527,6 +1552,7 @@
                     }
                 });
 
+
             if (!response.ok) {
 
                 throw new Error(
@@ -1534,6 +1560,7 @@
                 );
 
             }
+
 
             const files =
                 await response.json();

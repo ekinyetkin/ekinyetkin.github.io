@@ -1,9 +1,14 @@
-```html
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Ekin Yetkin — Görsel İçerik Üreticisi</title>
 
@@ -13,6 +18,7 @@
     >
 
     <style>
+
         * {
             margin: 0;
             padding: 0;
@@ -53,7 +59,7 @@
 
             padding: 0 5vw;
 
-            background: rgba(5, 5, 5, 0.88);
+            background: rgba(5, 5, 5, .88);
             backdrop-filter: blur(12px);
 
             border-bottom: 1px solid #202020;
@@ -78,6 +84,7 @@
             letter-spacing: 1.5px;
             text-transform: uppercase;
             color: #a5a5a5;
+
             transition: color .2s ease;
         }
 
@@ -99,8 +106,11 @@
             margin-bottom: 80px;
         }
 
+        /* HERO */
+
         .hero {
             min-height: 100vh;
+
             padding: 150px 5vw 80px;
 
             display: flex;
@@ -180,11 +190,16 @@
             color: #fff;
         }
 
+        /* ÇALIŞMALAR */
+
         .work-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
+
             gap: 1px;
+
             background: #292929;
+
             border: 1px solid #292929;
         }
 
@@ -226,6 +241,7 @@
             max-width: 520px;
 
             color: #777;
+
             font-size: 14px;
             line-height: 1.6;
 
@@ -235,6 +251,7 @@
 
         .work-arrow {
             position: absolute;
+
             top: 34px;
             right: 38px;
 
@@ -253,13 +270,15 @@
             transform: translate(5px, -5px);
         }
 
-        /* Ürün & Yemek görseli */
-        .work-card.food-card {
+        /* ÜRÜN & YEMEK */
+
+        .food-card {
             background: #050505;
         }
 
-        .work-card.food-card::before {
+        .food-card::before {
             content: "";
+
             position: absolute;
             inset: 0;
 
@@ -269,7 +288,8 @@
                     rgba(0, 0, 0, .82),
                     rgba(0, 0, 0, .18)
                 ),
-                url("images/urun-yemek/IMG_3.jpg") center center / cover no-repeat;
+                url("images/urun-yemek/IMG_3.jpg")
+                center center / cover no-repeat;
 
             opacity: .9;
 
@@ -278,15 +298,18 @@
                 opacity .3s ease;
         }
 
-        .work-card.food-card:hover::before {
+        .food-card:hover::before {
             transform: scale(1.04);
             opacity: 1;
         }
+
+        /* SOSYAL MEDYA */
 
         .social-intro {
             max-width: 650px;
 
             color: #999;
+
             font-size: 17px;
             line-height: 1.65;
 
@@ -339,6 +362,7 @@
 
             font-size: 11px;
             letter-spacing: 2px;
+
             text-transform: uppercase;
 
             color: #666;
@@ -360,6 +384,8 @@
             color: #555;
         }
 
+        /* HAKKIMDA */
+
         .about-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -370,14 +396,18 @@
             font-size: clamp(34px, 5vw, 70px);
             line-height: .98;
             letter-spacing: -3px;
+
             text-transform: uppercase;
+
             font-weight: 700;
         }
 
         .about-text {
             color: #999;
+
             font-size: 17px;
             line-height: 1.75;
+
             max-width: 580px;
         }
 
@@ -385,13 +415,17 @@
             margin-top: 25px;
         }
 
+        /* PROJELER */
+
         .project-list {
             border-top: 1px solid #292929;
         }
 
         .project {
             display: grid;
+
             grid-template-columns: 1fr 1fr;
+
             gap: 50px;
 
             padding: 45px 0;
@@ -401,14 +435,19 @@
 
         .project-title {
             font-size: clamp(28px, 4vw, 52px);
+
             line-height: .95;
+
             letter-spacing: -2px;
+
             text-transform: uppercase;
         }
 
         .project-info {
             color: #888;
+
             font-size: 14px;
+
             line-height: 1.7;
         }
 
@@ -416,6 +455,8 @@
             color: #ddd;
             font-weight: 500;
         }
+
+        /* İLETİŞİM */
 
         .contact-content {
             display: flex;
@@ -425,10 +466,15 @@
 
         .contact-title {
             font-size: clamp(50px, 9vw, 140px);
+
             line-height: .85;
+
             letter-spacing: -6px;
+
             text-transform: uppercase;
+
             font-weight: 800;
+
             max-width: 1000px;
         }
 
@@ -436,9 +482,11 @@
             margin-top: 60px;
 
             font-size: clamp(22px, 3vw, 38px);
+
             letter-spacing: -1px;
 
             border-bottom: 1px solid #555;
+
             padding-bottom: 8px;
         }
 
@@ -449,7 +497,9 @@
         .contact-socials {
             display: flex;
             gap: 25px;
+
             margin-top: 30px;
+
             flex-wrap: wrap;
         }
 
@@ -457,7 +507,9 @@
             color: #888;
 
             font-size: 12px;
+
             letter-spacing: 2px;
+
             text-transform: uppercase;
 
             transition: color .2s ease;
@@ -467,19 +519,27 @@
             color: #fff;
         }
 
+        /* FOOTER */
+
         footer {
             padding: 35px 5vw;
 
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
 
             color: #555;
 
             font-size: 10px;
+
             letter-spacing: 2px;
+
             text-transform: uppercase;
         }
+
+        /* MOBILE */
 
         @media (max-width: 800px) {
 
@@ -580,28 +640,64 @@
 
             footer {
                 padding: 30px 6vw;
+
                 flex-direction: column;
+
                 gap: 12px;
+
                 align-items: flex-start;
             }
+
         }
+
     </style>
+
 </head>
+
 
 <body>
 
     <nav>
-        <a href="#top" class="logo">EKİN YETKİN</a>
+
+        <a href="#top" class="logo">
+            EKİN YETKİN
+        </a>
 
         <ul class="nav-links">
-            <li><a href="#work">Çalışmalar</a></li>
-            <li><a href="#social">Sosyal Medya</a></li>
-            <li><a href="#about">Hakkımda</a></li>
-            <li><a href="#contact">İletişim</a></li>
+
+            <li>
+                <a href="#work">
+                    Çalışmalar
+                </a>
+            </li>
+
+            <li>
+                <a href="#social">
+                    Sosyal Medya
+                </a>
+            </li>
+
+            <li>
+                <a href="#about">
+                    Hakkımda
+                </a>
+            </li>
+
+            <li>
+                <a href="#contact">
+                    İletişim
+                </a>
+            </li>
+
         </ul>
+
     </nav>
 
+
     <main id="top">
+
+
+        <!-- HERO -->
 
         <section class="hero">
 
@@ -623,16 +719,27 @@
             </p>
 
             <div class="hero-buttons">
-                <a href="#work" class="button primary">
+
+                <a
+                    href="#work"
+                    class="button primary"
+                >
                     Çalışmalarımı Gör
                 </a>
 
-                <a href="#contact" class="button">
+                <a
+                    href="#contact"
+                    class="button"
+                >
                     İletişime Geç
                 </a>
+
             </div>
 
         </section>
+
+
+        <!-- ÇALIŞMALAR -->
 
         <section id="work">
 
@@ -642,12 +749,19 @@
 
             <div class="work-grid">
 
-                <a href="#" class="work-card food-card">
 
-                    <span class="work-arrow">↗</span>
+                <a
+                    href="gallery.html?category=urun-yemek"
+                    class="work-card food-card"
+                >
+
+                    <span class="work-arrow">
+                        ↗
+                    </span>
 
                     <h3>
-                        Ürün<br>&amp; Yemek
+                        Ürün<br>
+                        &amp; Yemek
                     </h3>
 
                     <p>
@@ -657,12 +771,19 @@
 
                 </a>
 
-                <a href="#" class="work-card">
 
-                    <span class="work-arrow">↗</span>
+                <a
+                    href="gallery.html?category=marka-tanitim"
+                    class="work-card"
+                >
+
+                    <span class="work-arrow">
+                        ↗
+                    </span>
 
                     <h3>
-                        Marka<br>&amp; Tanıtım
+                        Marka<br>
+                        &amp; Tanıtım
                     </h3>
 
                     <p>
@@ -672,9 +793,15 @@
 
                 </a>
 
-                <a href="#" class="work-card">
 
-                    <span class="work-arrow">↗</span>
+                <a
+                    href="gallery.html?category=etkinlik"
+                    class="work-card"
+                >
+
+                    <span class="work-arrow">
+                        ↗
+                    </span>
 
                     <h3>
                         Etkinlik
@@ -687,9 +814,15 @@
 
                 </a>
 
-                <a href="#" class="work-card">
 
-                    <span class="work-arrow">↗</span>
+                <a
+                    href="gallery.html?category=roportaj"
+                    class="work-card"
+                >
+
+                    <span class="work-arrow">
+                        ↗
+                    </span>
 
                     <h3>
                         Röportaj
@@ -702,12 +835,19 @@
 
                 </a>
 
-                <a href="#" class="work-card">
 
-                    <span class="work-arrow">↗</span>
+                <a
+                    href="gallery.html?category=dugun-nikah"
+                    class="work-card"
+                >
+
+                    <span class="work-arrow">
+                        ↗
+                    </span>
 
                     <h3>
-                        Düğün<br>&amp; Nikah
+                        Düğün<br>
+                        &amp; Nikah
                     </h3>
 
                     <p>
@@ -717,12 +857,19 @@
 
                 </a>
 
-                <a href="#" class="work-card">
 
-                    <span class="work-arrow">↗</span>
+                <a
+                    href="gallery.html?category=sosyal-medya"
+                    class="work-card"
+                >
+
+                    <span class="work-arrow">
+                        ↗
+                    </span>
 
                     <h3>
-                        Sosyal<br>Medya
+                        Sosyal<br>
+                        Medya
                     </h3>
 
                     <p>
@@ -732,14 +879,19 @@
 
                 </a>
 
+
             </div>
 
         </section>
 
+
+        <!-- SOSYAL MEDYA -->
+
         <section id="social">
 
             <h2 class="section-title">
-                SOSYAL<br>MEDYA
+                SOSYAL<br>
+                MEDYA
             </h2>
 
             <p class="social-intro">
@@ -749,6 +901,7 @@
                 yönetiyorum.
             </p>
 
+
             <div class="social-group">
 
                 <div class="social-group-title">
@@ -757,9 +910,14 @@
 
                 <div class="social-list">
 
-                    <a href="#" class="social-item">
+
+                    <a
+                        href="#"
+                        class="social-item"
+                    >
 
                         <div>
+
                             <div class="social-name">
                                 Ekin Yetkin
                             </div>
@@ -767,9 +925,11 @@
                             <div class="social-platform">
                                 Instagram
                             </div>
+
                         </div>
 
                         <div class="social-right">
+
                             <div class="social-stat">
                                 —
                             </div>
@@ -777,13 +937,19 @@
                             <div class="social-arrow">
                                 ↗
                             </div>
+
                         </div>
 
                     </a>
 
-                    <a href="#" class="social-item">
+
+                    <a
+                        href="#"
+                        class="social-item"
+                    >
 
                         <div>
+
                             <div class="social-name">
                                 Ekin Yetkin
                             </div>
@@ -791,9 +957,11 @@
                             <div class="social-platform">
                                 TikTok
                             </div>
+
                         </div>
 
                         <div class="social-right">
+
                             <div class="social-stat">
                                 —
                             </div>
@@ -801,13 +969,19 @@
                             <div class="social-arrow">
                                 ↗
                             </div>
+
                         </div>
 
                     </a>
 
-                    <a href="#" class="social-item">
+
+                    <a
+                        href="#"
+                        class="social-item"
+                    >
 
                         <div>
+
                             <div class="social-name">
                                 Ekin Yetkin
                             </div>
@@ -815,9 +989,11 @@
                             <div class="social-platform">
                                 YouTube
                             </div>
+
                         </div>
 
                         <div class="social-right">
+
                             <div class="social-stat">
                                 —
                             </div>
@@ -825,13 +1001,19 @@
                             <div class="social-arrow">
                                 ↗
                             </div>
+
                         </div>
 
                     </a>
 
-                    <a href="#" class="social-item">
+
+                    <a
+                        href="#"
+                        class="social-item"
+                    >
 
                         <div>
+
                             <div class="social-name">
                                 Ekin Yetkin EN
                             </div>
@@ -839,9 +1021,11 @@
                             <div class="social-platform">
                                 YouTube
                             </div>
+
                         </div>
 
                         <div class="social-right">
+
                             <div class="social-stat">
                                 —
                             </div>
@@ -849,13 +1033,16 @@
                             <div class="social-arrow">
                                 ↗
                             </div>
+
                         </div>
 
                     </a>
 
+
                 </div>
 
             </div>
+
 
             <div class="social-group">
 
@@ -865,9 +1052,14 @@
 
                 <div class="social-list">
 
-                    <a href="#" class="social-item">
+
+                    <a
+                        href="#"
+                        class="social-item"
+                    >
 
                         <div>
+
                             <div class="social-name">
                                 Beste Tunca
                             </div>
@@ -875,6 +1067,7 @@
                             <div class="social-platform">
                                 Instagram
                             </div>
+
                         </div>
 
                         <div class="social-right">
@@ -891,9 +1084,14 @@
 
                     </a>
 
-                    <a href="#" class="social-item">
+
+                    <a
+                        href="#"
+                        class="social-item"
+                    >
 
                         <div>
+
                             <div class="social-name">
                                 Beste Tunca
                             </div>
@@ -901,6 +1099,7 @@
                             <div class="social-platform">
                                 TikTok
                             </div>
+
                         </div>
 
                         <div class="social-right">
@@ -917,9 +1116,14 @@
 
                     </a>
 
-                    <a href="#" class="social-item">
+
+                    <a
+                        href="#"
+                        class="social-item"
+                    >
 
                         <div>
+
                             <div class="social-name">
                                 Beste Tunca
                             </div>
@@ -927,6 +1131,7 @@
                             <div class="social-platform">
                                 YouTube
                             </div>
+
                         </div>
 
                         <div class="social-right">
@@ -943,11 +1148,15 @@
 
                     </a>
 
+
                 </div>
 
             </div>
 
         </section>
+
+
+        <!-- HAKKIMDA -->
 
         <section id="about">
 
@@ -989,6 +1198,9 @@
 
         </section>
 
+
+        <!-- PROJELER -->
+
         <section id="projects">
 
             <h2 class="section-title">
@@ -996,6 +1208,7 @@
             </h2>
 
             <div class="project-list">
+
 
                 <article class="project">
 
@@ -1024,6 +1237,7 @@
 
                 </article>
 
+
                 <article class="project">
 
                     <div class="project-title">
@@ -1050,6 +1264,7 @@
                     </div>
 
                 </article>
+
 
                 <article class="project">
 
@@ -1078,9 +1293,13 @@
 
                 </article>
 
+
             </div>
 
         </section>
+
+
+        <!-- İLETİŞİM -->
 
         <section id="contact">
 
@@ -1120,6 +1339,7 @@
 
     </main>
 
+
     <footer>
 
         <span>
@@ -1132,6 +1352,7 @@
 
     </footer>
 
+
 </body>
+
 </html>
-```

@@ -1,24 +1,12 @@
 <!DOCTYPE html>
 <html lang="tr">
-
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Ekin Yetkin — Çalışmalar</title>
-
-    <meta
-        name="description"
-        content="Ekin Yetkin — Görsel içerik çalışmaları."
-    >
+    <title>Çalışmalar — Ekin Yetkin</title>
 
     <style>
-
         * {
             margin: 0;
             padding: 0;
@@ -31,9 +19,9 @@
 
         body {
             background: #050505;
-            color: #f2f2f2;
+            color: #f5f5f5;
             font-family: Arial, Helvetica, sans-serif;
-            overflow-x: hidden;
+            min-height: 100vh;
         }
 
         a {
@@ -41,79 +29,77 @@
             text-decoration: none;
         }
 
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 78px;
+        /* =========================
+           HEADER
+        ========================= */
 
+        header {
+            padding: 32px 5vw;
             display: flex;
-            align-items: center;
             justify-content: space-between;
-
-            padding: 0 5vw;
-
-            background: rgba(5, 5, 5, .88);
-            backdrop-filter: blur(12px);
-
-            border-bottom: 1px solid #202020;
-
-            z-index: 1000;
+            align-items: center;
+            border-bottom: 1px solid #222;
         }
 
         .logo {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 700;
-            letter-spacing: 1px;
+            letter-spacing: 0.12em;
         }
 
         .back {
             font-size: 12px;
-            letter-spacing: 1.5px;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
-            color: #888;
-
-            transition: color .2s ease;
+            color: #999;
+            transition: color .25s ease;
         }
 
         .back:hover {
             color: #fff;
         }
 
-        main {
-            padding: 160px 5vw 100px;
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            padding: 100px 5vw 70px;
+            border-bottom: 1px solid #222;
         }
 
-        .category-label {
+        .eyebrow {
             font-size: 11px;
-            letter-spacing: 3px;
-            color: #666;
+            letter-spacing: .18em;
             text-transform: uppercase;
+            color: #777;
             margin-bottom: 25px;
         }
 
         h1 {
-            font-size: clamp(55px, 9vw, 130px);
-            line-height: .85;
-            letter-spacing: -6px;
-            text-transform: uppercase;
-            margin-bottom: 80px;
+            font-size: clamp(50px, 9vw, 150px);
+            line-height: .88;
+            letter-spacing: -.055em;
+            font-weight: 700;
+            max-width: 1100px;
         }
 
+        /* =========================
+           GALLERY
+        ========================= */
+
         .gallery {
+            padding: 60px 5vw 100px;
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 2px;
-            background: #202020;
+            gap: 18px;
         }
 
         .gallery-item {
             position: relative;
-            background: #080808;
             overflow: hidden;
-
-            cursor: pointer;
+            background: #111;
+            min-height: 350px;
         }
 
         .gallery-item img,
@@ -121,17 +107,17 @@
             width: 100%;
             height: 100%;
             min-height: 350px;
-
             display: block;
-
             object-fit: cover;
-
             transition:
                 transform .5s ease,
                 opacity .3s ease;
         }
 
-        .gallery-item:hover img,
+        .gallery-item:hover img {
+            transform: scale(1.025);
+        }
+
         .gallery-item:hover video {
             transform: scale(1.025);
         }
@@ -144,83 +130,50 @@
             cursor: pointer;
         }
 
-        .file-name {
-            position: absolute;
-            left: 20px;
-            bottom: 18px;
+        /* =========================
+           FULLSCREEN VIDEO
+        ========================= */
 
-            font-size: 10px;
-            letter-spacing: 1px;
-
-            color: rgba(255,255,255,.65);
-
-            background: rgba(0,0,0,.55);
-
-            padding: 7px 9px;
-
-            opacity: 0;
-
-            transition: opacity .25s ease;
-
-            pointer-events: none;
+        .video-item video:fullscreen {
+            width: 100%;
+            height: 100%;
+            min-height: 0;
+            object-fit: contain !important;
+            transform: none !important;
+            background: #000;
         }
 
-        .gallery-item:hover .file-name {
-            opacity: 1;
+        .video-item video:-webkit-full-screen {
+            width: 100%;
+            height: 100%;
+            min-height: 0;
+            object-fit: contain !important;
+            transform: none !important;
+            background: #000;
         }
 
-        .video-label {
-            position: absolute;
-            top: 18px;
-            left: 18px;
-
-            font-size: 10px;
-            letter-spacing: 2px;
-
-            padding: 7px 10px;
-
-            background: rgba(0,0,0,.65);
-
-            text-transform: uppercase;
-
-            pointer-events: none;
+        .video-item video:-moz-full-screen {
+            width: 100%;
+            height: 100%;
+            min-height: 0;
+            object-fit: contain !important;
+            transform: none !important;
+            background: #000;
         }
 
-        .loading {
-            color: #666;
-            font-size: 14px;
-            padding: 80px 0;
-        }
-
-        .empty {
-            color: #666;
-            font-size: 14px;
-            line-height: 1.7;
-            padding: 60px 0;
-        }
-
-        .error {
-            color: #777;
-            font-size: 14px;
-            line-height: 1.7;
-            padding: 60px 0;
-        }
-
-        /* LIGHTBOX */
+        /* =========================
+           LIGHTBOX
+        ========================= */
 
         .lightbox {
             position: fixed;
             inset: 0;
-
-            background: rgba(0,0,0,.94);
-
+            background: rgba(0, 0, 0, .96);
             display: none;
             align-items: center;
             justify-content: center;
-
-            padding: 40px;
-
-            z-index: 3000;
+            z-index: 9999;
+            padding: 30px;
         }
 
         .lightbox.active {
@@ -228,230 +181,217 @@
         }
 
         .lightbox img {
-            max-width: 94vw;
-            max-height: 90vh;
-
+            max-width: 95vw;
+            max-height: 92vh;
             object-fit: contain;
         }
 
         .lightbox-close {
-            position: fixed;
+            position: absolute;
             top: 25px;
             right: 30px;
-
-            font-size: 32px;
-            font-weight: 300;
-
-            color: #aaa;
-
-            cursor: pointer;
-
-            transition: color .2s ease;
-        }
-
-        .lightbox-close:hover {
+            font-size: 35px;
+            line-height: 1;
             color: #fff;
+            cursor: pointer;
+            font-weight: 300;
         }
+
+        /* =========================
+           STATUS
+        ========================= */
+
+        .status {
+            min-height: 300px;
+            padding: 100px 5vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+            font-size: 13px;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
 
         @media (max-width: 800px) {
 
-            nav {
-                height: 68px;
-                padding: 0 6vw;
+            header {
+                padding: 25px 5vw;
             }
 
-            main {
-                padding: 125px 6vw 70px;
+            .hero {
+                padding: 70px 5vw 50px;
             }
 
             h1 {
-                font-size: 14vw;
-                letter-spacing: -4px;
-                margin-bottom: 50px;
+                font-size: clamp(45px, 14vw, 90px);
             }
 
             .gallery {
+                padding: 35px 5vw 70px;
                 grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .gallery-item {
+                min-height: 300px;
             }
 
             .gallery-item img,
             .gallery-item video {
-                min-height: 280px;
-            }
-
-            .file-name {
-                opacity: 1;
+                min-height: 300px;
             }
 
             .lightbox {
                 padding: 15px;
             }
 
+            .lightbox-close {
+                top: 15px;
+                right: 20px;
+            }
         }
-
     </style>
-
 </head>
 
 <body>
 
-    <nav>
-
+    <header>
         <a href="index.html" class="logo">
             EKİN YETKİN
         </a>
 
-        <a href="index.html#work" class="back">
-            ← Çalışmalar
+        <a href="index.html" class="back">
+            ← Geri
         </a>
+    </header>
 
-    </nav>
-
-
-    <main>
-
-        <div class="category-label" id="categoryLabel">
-            Çalışmalar
+    <section class="hero">
+        <div class="eyebrow" id="categoryLabel">
+            ÇALIŞMALAR
         </div>
 
         <h1 id="categoryTitle">
-            Yükleniyor
+            YÜKLENİYOR...
         </h1>
+    </section>
 
-        <div id="gallery" class="gallery">
-
-            <div class="loading">
-                Çalışmalar yükleniyor...
-            </div>
-
+    <main>
+        <div class="status" id="status">
+            ÇALIŞMALAR YÜKLENİYOR...
         </div>
 
+        <section class="gallery" id="gallery"></section>
     </main>
-
 
     <!-- LIGHTBOX -->
 
-    <div
-        id="lightbox"
-        class="lightbox"
-    >
-
-        <div
-            id="lightboxClose"
-            class="lightbox-close"
-        >
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-close" id="lightboxClose">
             ×
         </div>
 
-        <img
-            id="lightboxImage"
-            src=""
-            alt=""
-        >
-
+        <img id="lightboxImage" src="" alt="">
     </div>
-
 
     <script>
 
-        /*
-         * GITHUB AYARLARI
-         */
+        /* =========================
+           AYARLAR
+        ========================= */
 
-        const GITHUB_USER = "ekinyetkin";
-
-        const GITHUB_REPO = "ekinyetkin.github.io";
-
-        const GITHUB_BRANCH = "main";
-
-
-        /*
-         * KATEGORİLER
-         */
+        const repoOwner = "ekinyetkin";
+        const repoName = "ekinyetkin.github.io";
+        const branch = "main";
 
         const categories = {
 
             "urun-yemek": {
-                title: "Ürün & Yemek",
-                label: "Ürün & Yemek"
+                title: "ÜRÜN & YEMEK",
+                label: "ÇALIŞMALAR"
             },
 
             "marka-tanitim": {
-                title: "Marka & Tanıtım",
-                label: "Marka & Tanıtım"
+                title: "MARKA & TANITIM",
+                label: "ÇALIŞMALAR"
             },
 
             "etkinlik": {
-                title: "Etkinlik",
-                label: "Etkinlik"
+                title: "ETKİNLİK",
+                label: "ÇALIŞMALAR"
             },
 
             "roportaj": {
-                title: "Röportaj",
-                label: "Röportaj"
+                title: "RÖPORTAJ",
+                label: "ÇALIŞMALAR"
             },
 
             "dugun-nikah": {
-                title: "Düğün & Nikah",
-                label: "Düğün & Nikah"
+                title: "DÜĞÜN & NİKAH",
+                label: "ÇALIŞMALAR"
             },
 
             "sosyal-medya": {
-                title: "Sosyal Medya",
-                label: "Sosyal Medya"
+                title: "SOSYAL MEDYA",
+                label: "ÇALIŞMALAR"
             }
 
         };
 
 
-        /*
-         * URL'DEN KATEGORİYİ AL
-         */
+        /* =========================
+           CATEGORY
+        ========================= */
 
-        const params =
-            new URLSearchParams(window.location.search);
+        const params = new URLSearchParams(window.location.search);
 
-        const category =
-            params.get("category");
+        const category = params.get("category");
+
+        const categoryData = categories[category];
+
+        const categoryTitle =
+            document.getElementById("categoryTitle");
+
+        const categoryLabel =
+            document.getElementById("categoryLabel");
+
+        const gallery =
+            document.getElementById("gallery");
+
+        const status =
+            document.getElementById("status");
 
 
-        /*
-         * GEÇERLİ KATEGORİ KONTROLÜ
-         */
+        if (!categoryData) {
 
-        if (!categories[category]) {
+            categoryLabel.textContent = "HATA";
 
-            document.title =
-                "Ekin Yetkin — Çalışmalar";
+            categoryTitle.textContent = "KATEGORİ BULUNAMADI";
 
-            document.getElementById("categoryTitle")
-                .textContent = "Kategori bulunamadı";
-
-            document.getElementById("categoryLabel")
-                .textContent = "Hata";
+            status.textContent =
+                "Geçerli bir kategori seçilmedi.";
 
         } else {
 
-            const categoryData =
-                categories[category];
+            categoryLabel.textContent =
+                categoryData.label;
 
-            document.title =
-                "Ekin Yetkin — " + categoryData.title;
-
-            document.getElementById("categoryTitle")
-                .textContent = categoryData.title;
-
-            document.getElementById("categoryLabel")
-                .textContent = categoryData.label;
+            categoryTitle.textContent =
+                categoryData.title;
 
             loadGallery(category);
 
         }
 
 
-        /*
-         * DESTEKLENEN DOSYA TÜRLERİ
-         */
+        /* =========================
+           DOSYA UZANTILARI
+        ========================= */
 
         const imageExtensions = [
             "jpg",
@@ -468,89 +408,72 @@
         ];
 
 
-        /*
-         * GALERİYİ GITHUB'TAN ÇEK
-         */
+        /* =========================
+           GITHUB API
+        ========================= */
 
         async function loadGallery(category) {
 
-            const gallery =
-                document.getElementById("gallery");
-
             const apiUrl =
-                `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/images/${category}?ref=${GITHUB_BRANCH}`;
+                `https://api.github.com/repos/${repoOwner}/${repoName}/contents/images/${category}?ref=${branch}`;
 
             try {
 
                 const response =
-                    await fetch(apiUrl, {
-                        headers: {
-                            "Accept":
-                                "application/vnd.github+json"
-                        }
-                    });
+                    await fetch(apiUrl);
 
                 if (!response.ok) {
-
-                    throw new Error(
-                        "GitHub klasörü okunamadı."
-                    );
-
+                    throw new Error("GitHub API hatası");
                 }
 
                 const files =
                     await response.json();
 
-
-                /*
-                 * SADECE FOTOĞRAF VE VİDEOLAR
-                 */
-
                 const mediaFiles =
-                    files
-                        .filter(file => file.type === "file")
-                        .filter(file => {
+                    files.filter(file => {
 
-                            const extension =
-                                getExtension(file.name);
+                        if (file.type !== "file") {
+                            return false;
+                        }
 
-                            return (
-                                imageExtensions.includes(extension) ||
-                                videoExtensions.includes(extension)
-                            );
+                        const extension =
+                            getExtension(file.name);
 
-                        })
-                        .sort((a, b) =>
-                            a.name.localeCompare(
-                                b.name,
-                                undefined,
-                                {
-                                    numeric: true,
-                                    sensitivity: "base"
-                                }
-                            )
+                        return (
+                            imageExtensions.includes(extension) ||
+                            videoExtensions.includes(extension)
                         );
+
+                    });
+
+
+                /* =========================
+                   DOSYA SIRALAMA
+                ========================= */
+
+                mediaFiles.sort((a, b) => {
+
+                    return naturalSort(
+                        a.name,
+                        b.name
+                    );
+
+                });
 
 
                 gallery.innerHTML = "";
 
-
                 if (mediaFiles.length === 0) {
 
-                    gallery.innerHTML = `
-                        <div class="empty">
-                            Bu kategoride henüz çalışma bulunmuyor.
-                        </div>
-                    `;
+                    status.textContent =
+                        "Bu kategoride henüz çalışma bulunmuyor.";
 
                     return;
 
                 }
 
 
-                /*
-                 * HER DOSYAYI GALERİYE EKLE
-                 */
+                status.style.display = "none";
 
                 mediaFiles.forEach(file => {
 
@@ -579,22 +502,17 @@
 
                 console.error(error);
 
-                gallery.innerHTML = `
-                    <div class="error">
-                        Çalışmalar yüklenirken bir hata oluştu.
-                        <br><br>
-                        Lütfen birkaç saniye sonra tekrar deneyin.
-                    </div>
-                `;
+                status.textContent =
+                    "Çalışmalar yüklenirken bir hata oluştu.";
 
             }
 
         }
 
 
-        /*
-         * UZANTIYI AL
-         */
+        /* =========================
+           EXTENSION
+        ========================= */
 
         function getExtension(filename) {
 
@@ -606,9 +524,20 @@
         }
 
 
-        /*
-         * FOTOĞRAF OLUŞTUR
-         */
+        /* =========================
+           RAW URL
+        ========================= */
+
+        function getRawUrl(path) {
+
+            return `https://raw.githubusercontent.com/${repoOwner}/${repoName}/${branch}/${path}`;
+
+        }
+
+
+        /* =========================
+           IMAGE
+        ========================= */
 
         function createImage(file) {
 
@@ -632,44 +561,29 @@
                 "lazy";
 
 
-            const fileName =
-                document.createElement("div");
-
-            fileName.className =
-                "file-name";
-
-            fileName.textContent =
-                file.name;
-
-
-            item.appendChild(image);
-
-            item.appendChild(fileName);
-
-
-            item.addEventListener(
+            image.addEventListener(
                 "click",
                 () => {
 
                     openLightbox(
                         image.src,
-                        file.name
+                        image.alt
                     );
 
                 }
             );
 
 
-            document
-                .getElementById("gallery")
-                .appendChild(item);
+            item.appendChild(image);
+
+            gallery.appendChild(item);
 
         }
 
 
-        /*
-         * VİDEO OLUŞTUR
-         */
+        /* =========================
+           VIDEO
+        ========================= */
 
         function createVideo(file) {
 
@@ -696,116 +610,76 @@
                 true;
 
 
-            const label =
-                document.createElement("div");
-
-            label.className =
-                "video-label";
-
-            label.textContent =
-                "Video";
-
-
-            const fileName =
-                document.createElement("div");
-
-            fileName.className =
-                "file-name";
-
-            fileName.textContent =
-                file.name;
-
-
             item.appendChild(video);
 
-            item.appendChild(label);
-
-            item.appendChild(fileName);
-
-
-            document
-                .getElementById("gallery")
-                .appendChild(item);
+            gallery.appendChild(item);
 
         }
 
 
-        /*
-         * RAW GITHUB URL
-         */
+        /* =========================
+           LIGHTBOX
+        ========================= */
 
-        function getRawUrl(path) {
+        const lightbox =
+            document.getElementById("lightbox");
 
-            return `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${path}`;
+        const lightboxImage =
+            document.getElementById("lightboxImage");
 
-        }
+        const lightboxClose =
+            document.getElementById("lightboxClose");
 
-
-        /*
-         * LIGHTBOX
-         */
 
         function openLightbox(src, alt) {
 
-            const lightbox =
-                document.getElementById("lightbox");
-
-            const image =
-                document.getElementById("lightboxImage");
-
-            image.src =
+            lightboxImage.src =
                 src;
 
-            image.alt =
+            lightboxImage.alt =
                 alt;
 
             lightbox.classList.add("active");
 
+            document.body.style.overflow =
+                "hidden";
+
         }
 
-
-        /*
-         * LIGHTBOX KAPAT
-         */
 
         function closeLightbox() {
 
-            document
-                .getElementById("lightbox")
-                .classList.remove("active");
+            lightbox.classList.remove("active");
 
-            document
-                .getElementById("lightboxImage")
-                .src = "";
+            lightboxImage.src =
+                "";
+
+            document.body.style.overflow =
+                "";
 
         }
 
 
-        document
-            .getElementById("lightboxClose")
-            .addEventListener(
-                "click",
-                closeLightbox
-            );
+        lightboxClose.addEventListener(
+            "click",
+            closeLightbox
+        );
 
 
-        document
-            .getElementById("lightbox")
-            .addEventListener(
-                "click",
-                event => {
+        lightbox.addEventListener(
+            "click",
+            event => {
 
-                    if (
-                        event.target.id ===
-                        "lightbox"
-                    ) {
+                if (
+                    event.target === lightbox
+                ) {
 
-                        closeLightbox();
-
-                    }
+                    closeLightbox();
 
                 }
-            );
+
+            }
+        );
 
 
         document.addEventListener(
@@ -823,8 +697,25 @@
             }
         );
 
+
+        /* =========================
+           NATURAL SORT
+        ========================= */
+
+        function naturalSort(a, b) {
+
+            return a.localeCompare(
+                b,
+                undefined,
+                {
+                    numeric: true,
+                    sensitivity: "base"
+                }
+            );
+
+        }
+
     </script>
 
 </body>
-
 </html>

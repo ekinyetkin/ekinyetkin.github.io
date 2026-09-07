@@ -13,7 +13,6 @@
     >
 
     <style>
-
         * {
             margin: 0;
             padding: 0;
@@ -156,13 +155,15 @@
             transition:
                 transform .5s ease,
                 opacity .3s ease;
+
+            cursor: pointer;
         }
 
         .video-player:hover video {
             transform: scale(1.025);
         }
 
-        /* BÜYÜK ORTA OYNATMA TUŞU */
+        /* BÜYÜK OYNATMA TUŞU */
 
         .video-play-overlay {
             position: absolute;
@@ -221,6 +222,27 @@
         .video-player.playing .video-play-overlay {
             opacity: 0;
             pointer-events: none;
+        }
+
+        /* VİDEO ETİKETİ */
+
+        .video-label {
+            position: absolute;
+            top: 18px;
+            left: 18px;
+
+            font-size: 10px;
+            letter-spacing: 2px;
+
+            padding: 7px 10px;
+
+            background: rgba(0,0,0,.65);
+
+            text-transform: uppercase;
+
+            pointer-events: none;
+
+            z-index: 16;
         }
 
         /* VİDEO KONTROLLERİ */
@@ -343,25 +365,6 @@
             white-space: nowrap;
         }
 
-        .video-label {
-            position: absolute;
-            top: 18px;
-            left: 18px;
-
-            font-size: 10px;
-            letter-spacing: 2px;
-
-            padding: 7px 10px;
-
-            background: rgba(0,0,0,.65);
-
-            text-transform: uppercase;
-
-            pointer-events: none;
-
-            z-index: 16;
-        }
-
         /* TAM EKRAN */
 
         .video-player:fullscreen {
@@ -420,24 +423,17 @@
 
         /* DURUM MESAJLARI */
 
-        .loading {
-            color: #666;
-            font-size: 14px;
-            padding: 80px 0;
-        }
-
-        .empty {
+        .loading,
+        .empty,
+        .error {
             color: #666;
             font-size: 14px;
             line-height: 1.7;
-            padding: 60px 0;
+            padding: 80px 0;
         }
 
         .error {
             color: #777;
-            font-size: 14px;
-            line-height: 1.7;
-            padding: 60px 0;
         }
 
         /* LIGHTBOX */
@@ -556,13 +552,9 @@
             .lightbox {
                 padding: 15px;
             }
-
         }
-
     </style>
-
 </head>
-
 
 <body>
 
@@ -679,6 +671,7 @@
             "gif"
         ];
 
+
         const videoExtensions = [
             "mp4",
             "webm",
@@ -690,6 +683,7 @@
             new URLSearchParams(
                 window.location.search
             );
+
 
         const category =
             params.get("category");
@@ -741,8 +735,10 @@
                     "gallery"
                 );
 
+
             const apiUrl =
                 `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/images/${category}?ref=${GITHUB_BRANCH}`;
+
 
             try {
 
@@ -753,9 +749,11 @@
                             headers: {
                                 "Accept":
                                     "application/vnd.github+json"
-                            }
+                            },
+                            cache: "no-store"
                         }
                     );
+
 
                 if (!response.ok) {
 
@@ -764,6 +762,7 @@
                     );
 
                 }
+
 
                 const files =
                     await response.json();
@@ -827,6 +826,7 @@
                         getExtension(
                             file.name
                         );
+
 
                     if (
                         imageExtensions.includes(
@@ -896,6 +896,7 @@
             const image =
                 document.createElement("img");
 
+
             image.src =
                 getRawUrl(file.path);
 
@@ -947,8 +948,29 @@
             const video =
                 document.createElement("video");
 
-            video.src =
+
+            /*
+             * ÖNEMLİ:
+             * GitHub API'nin verdiği download_url
+             * doğrudan kullanılmaktadır.
+             * Böylece dosya yolu yeniden oluşturulmaz.
+             */
+
+            const videoSource =
+                document.createElement("source");
+
+            videoSource.src =
+                file.download_url ||
                 getRawUrl(file.path);
+
+            videoSource.type =
+                "video/mp4";
+
+
+            video.appendChild(
+                videoSource
+            );
+
 
             video.preload =
                 "metadata";
@@ -958,6 +980,46 @@
 
             video.controls =
                 false;
+
+
+            /*
+             * VİDEO YÜKLENİNCE
+             */
+
+            video.addEventListener(
+                "loadedmetadata",
+                () => {
+
+                    console.log(
+                        "Video hazır:",
+                        file.name,
+                        video.duration
+                    );
+
+                }
+            );
+
+
+            /*
+             * VİDEO HATASI
+             */
+
+            video.addEventListener(
+                "error",
+                () => {
+
+                    console.error(
+                        "Video oynatma hatası:",
+                        file.name,
+                        video.error
+                    );
+
+                    player.classList.add(
+                        "video-error"
+                    );
+
+                }
+            );
 
 
             /* BÜYÜK OYNATMA TUŞU */
@@ -1122,29 +1184,50 @@
             );
 
 
-            player.appendChild(video);
-            player.appendChild(playOverlay);
-            player.appendChild(label);
-            player.appendChild(controls);
+            player.appendChild(
+                video
+            );
 
-            item.appendChild(player);
+            player.appendChild(
+                playOverlay
+            );
+
+            player.appendChild(
+                label
+            );
+
+            player.appendChild(
+                controls
+            );
 
 
-            /* BÜYÜK OYNATMA TUŞU */
+            item.appendChild(
+                player
+            );
+
+
+            /*
+             * BÜYÜK OYNATMA TUŞU
+             */
 
             playOverlay.addEventListener(
                 "click",
-                event => {
+                async event => {
 
                     event.stopPropagation();
 
-                    video.play();
+                    await startVideo(
+                        video,
+                        player
+                    );
 
                 }
             );
 
 
-            /* OYNAT / DURAKLAT */
+            /*
+             * OYNAT / DURAKLAT
+             */
 
             playButton.addEventListener(
                 "click",
@@ -1152,13 +1235,18 @@
 
                     event.stopPropagation();
 
-                    toggleVideo(video);
+                    toggleVideo(
+                        video,
+                        player
+                    );
 
                 }
             );
 
 
-            /* VİDEOYA TIKLAYINCA OYNAT */
+            /*
+             * VİDEOYA TIKLAYINCA
+             */
 
             video.addEventListener(
                 "click",
@@ -1166,13 +1254,18 @@
 
                     event.stopPropagation();
 
-                    toggleVideo(video);
+                    toggleVideo(
+                        video,
+                        player
+                    );
 
                 }
             );
 
 
-            /* OYNATILDI */
+            /*
+             * OYNATILDI
+             */
 
             video.addEventListener(
                 "play",
@@ -1180,12 +1273,6 @@
 
                     playButton.textContent =
                         "❚❚";
-
-                    playOverlay.style.opacity =
-                        "0";
-
-                    playOverlay.style.pointerEvents =
-                        "none";
 
                     player.classList.add(
                         "playing"
@@ -1195,7 +1282,9 @@
             );
 
 
-            /* DURAKLATILDI */
+            /*
+             * DURAKLATILDI
+             */
 
             video.addEventListener(
                 "pause",
@@ -1204,12 +1293,6 @@
                     playButton.textContent =
                         "▶";
 
-                    playOverlay.style.opacity =
-                        "1";
-
-                    playOverlay.style.pointerEvents =
-                        "auto";
-
                     player.classList.remove(
                         "playing"
                     );
@@ -1218,7 +1301,9 @@
             );
 
 
-            /* VİDEO BİTTİ */
+            /*
+             * VİDEO BİTTİ
+             */
 
             video.addEventListener(
                 "ended",
@@ -1227,12 +1312,6 @@
                     playButton.textContent =
                         "▶";
 
-                    playOverlay.style.opacity =
-                        "1";
-
-                    playOverlay.style.pointerEvents =
-                        "auto";
-
                     player.classList.remove(
                         "playing"
                     );
@@ -1241,7 +1320,9 @@
             );
 
 
-            /* İLERLEME */
+            /*
+             * İLERLEME
+             */
 
             video.addEventListener(
                 "timeupdate",
@@ -1262,6 +1343,7 @@
 
                     }
 
+
                     time.textContent =
                         formatTime(
                             video.currentTime
@@ -1275,7 +1357,9 @@
             );
 
 
-            /* METADATA */
+            /*
+             * METADATA
+             */
 
             video.addEventListener(
                 "loadedmetadata",
@@ -1291,7 +1375,9 @@
             );
 
 
-            /* İLERLEME ÇUBUĞU */
+            /*
+             * İLERLEME ÇUBUĞU
+             */
 
             progress.addEventListener(
                 "input",
@@ -1304,8 +1390,11 @@
                             video.duration
                         )
                     ) {
+
                         return;
+
                     }
+
 
                     video.currentTime =
                         (
@@ -1319,7 +1408,9 @@
             );
 
 
-            /* SES */
+            /*
+             * SES
+             */
 
             muteButton.addEventListener(
                 "click",
@@ -1339,7 +1430,9 @@
             );
 
 
-            /* TAM EKRAN */
+            /*
+             * TAM EKRAN
+             */
 
             fullscreenButton.addEventListener(
                 "click",
@@ -1355,7 +1448,9 @@
 
                             await document.exitFullscreen();
 
-                        } else if (
+                        }
+
+                        else if (
                             player.requestFullscreen
                         ) {
 
@@ -1378,7 +1473,9 @@
             );
 
 
-            /* TAM EKRAN İKONU */
+            /*
+             * TAM EKRAN İKONU
+             */
 
             document.addEventListener(
                 "fullscreenchange",
@@ -1392,7 +1489,9 @@
                         fullscreenButton.textContent =
                             "×";
 
-                    } else {
+                    }
+
+                    else {
 
                         fullscreenButton.textContent =
                             "⛶";
@@ -1403,7 +1502,9 @@
             );
 
 
-            /* SAĞ TIK */
+            /*
+             * SAĞ TIK
+             */
 
             video.addEventListener(
                 "contextmenu",
@@ -1422,13 +1523,85 @@
         }
 
 
-        function toggleVideo(video) {
+        async function startVideo(
+            video,
+            player
+        ) {
+
+            try {
+
+                /*
+                 * Kaynağı yeniden yüklemeden önce
+                 * tarayıcıya source'u kesin olarak tanıt.
+                 */
+
+                if (
+                    video.readyState === 0
+                ) {
+
+                    video.load();
+
+                }
+
+
+                await video.play();
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Video başlatılamadı:",
+                    error
+                );
+
+                /*
+                 * Bazı MP4'lerde metadata yüklenmesi
+                 * gecikebildiği için ikinci deneme.
+                 */
+
+                setTimeout(
+                    async () => {
+
+                        try {
+
+                            await video.play();
+
+                        }
+
+                        catch (secondError) {
+
+                            console.error(
+                                "İkinci video oynatma denemesi başarısız:",
+                                secondError
+                            );
+
+                        }
+
+                    },
+                    300
+                );
+
+            }
+
+        }
+
+
+        async function toggleVideo(
+            video,
+            player
+        ) {
 
             if (video.paused) {
 
-                video.play();
+                await startVideo(
+                    video,
+                    player
+                );
 
-            } else {
+            }
+
+            else {
 
                 video.pause();
 
@@ -1448,22 +1621,28 @@
 
             }
 
+
             const minutes =
                 Math.floor(
                     seconds / 60
                 );
+
 
             const remainingSeconds =
                 Math.floor(
                     seconds % 60
                 );
 
+
             return (
                 minutes +
                 ":" +
                 String(
                     remainingSeconds
-                ).padStart(2, "0")
+                ).padStart(
+                    2,
+                    "0"
+                )
             );
 
         }
@@ -1480,6 +1659,7 @@
                 document.getElementById(
                     "lightboxImage"
                 );
+
 
             image.src =
                 src;
@@ -1508,6 +1688,7 @@
                 document.getElementById(
                     "lightboxImage"
                 );
+
 
             lightbox.classList.remove(
                 "active"

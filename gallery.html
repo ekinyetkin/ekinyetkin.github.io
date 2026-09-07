@@ -128,7 +128,7 @@
             transform: scale(1.025);
         }
 
-        /* VİDEO OYNATICI */
+        /* VİDEO */
 
         .video-item {
             position: relative;
@@ -158,14 +158,69 @@
                 opacity .3s ease;
         }
 
-        /*
-         * Mouse videonun üzerine geldiğinde
-         * sadece video görüntüsü zoomlanır.
-         * Kontrol çubuğu zoomlanmaz.
-         */
-
         .video-player:hover video {
             transform: scale(1.025);
+        }
+
+        /* BÜYÜK ORTA OYNATMA TUŞU */
+
+        .video-play-overlay {
+            position: absolute;
+
+            top: 50%;
+            left: 50%;
+
+            width: 76px;
+            height: 76px;
+
+            transform: translate(-50%, -50%);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid rgba(255,255,255,.75);
+            border-radius: 50%;
+
+            background: rgba(0,0,0,.45);
+            backdrop-filter: blur(5px);
+
+            color: #fff;
+
+            cursor: pointer;
+
+            z-index: 10;
+
+            transition:
+                opacity .25s ease,
+                transform .25s ease,
+                background .25s ease,
+                border-color .25s ease;
+        }
+
+        .video-play-overlay:hover {
+            background: rgba(255,255,255,.15);
+            border-color: #fff;
+
+            transform:
+                translate(-50%, -50%)
+                scale(1.08);
+        }
+
+        .video-play-icon {
+            width: 0;
+            height: 0;
+
+            margin-left: 5px;
+
+            border-top: 11px solid transparent;
+            border-bottom: 11px solid transparent;
+            border-left: 17px solid #fff;
+        }
+
+        .video-player.playing .video-play-overlay {
+            opacity: 0;
+            pointer-events: none;
         }
 
         /* VİDEO KONTROLLERİ */
@@ -196,7 +251,7 @@
                 opacity .25s ease,
                 transform .25s ease;
 
-            z-index: 5;
+            z-index: 15;
         }
 
         .video-player:hover .video-controls,
@@ -304,7 +359,7 @@
 
             pointer-events: none;
 
-            z-index: 6;
+            z-index: 16;
         }
 
         /* TAM EKRAN */
@@ -357,11 +412,7 @@
             transform: none !important;
         }
 
-        .video-player:fullscreen .video-controls {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
+        .video-player:fullscreen .video-controls,
         .video-player:-webkit-full-screen .video-controls {
             opacity: 1;
             transform: translateY(0);
@@ -473,6 +524,17 @@
                 min-height: 280px;
             }
 
+            .video-play-overlay {
+                width: 64px;
+                height: 64px;
+            }
+
+            .video-play-icon {
+                border-top-width: 9px;
+                border-bottom-width: 9px;
+                border-left-width: 14px;
+            }
+
             .video-controls {
                 opacity: 1;
                 transform: none;
@@ -569,18 +631,10 @@
 
     <script>
 
-        /*
-         * GITHUB AYARLARI
-         */
-
         const GITHUB_USER = "ekinyetkin";
         const GITHUB_REPO = "ekinyetkin.github.io";
         const GITHUB_BRANCH = "main";
 
-
-        /*
-         * KATEGORİLER
-         */
 
         const categories = {
 
@@ -617,10 +671,6 @@
         };
 
 
-        /*
-         * DESTEKLENEN DOSYA TÜRLERİ
-         */
-
         const imageExtensions = [
             "jpg",
             "jpeg",
@@ -636,32 +686,28 @@
         ];
 
 
-        /*
-         * URL'DEN KATEGORİYİ AL
-         */
-
         const params =
-            new URLSearchParams(window.location.search);
+            new URLSearchParams(
+                window.location.search
+            );
 
         const category =
             params.get("category");
 
-
-        /*
-         * KATEGORİ KONTROLÜ
-         */
 
         if (!categories[category]) {
 
             document.title =
                 "Ekin Yetkin — Çalışmalar";
 
-            document.getElementById("categoryTitle")
-                .textContent =
+            document.getElementById(
+                "categoryTitle"
+            ).textContent =
                 "Kategori bulunamadı";
 
-            document.getElementById("categoryLabel")
-                .textContent =
+            document.getElementById(
+                "categoryLabel"
+            ).textContent =
                 "Hata";
 
         } else {
@@ -673,12 +719,14 @@
                 "Ekin Yetkin — " +
                 categoryData.title;
 
-            document.getElementById("categoryTitle")
-                .textContent =
+            document.getElementById(
+                "categoryTitle"
+            ).textContent =
                 categoryData.title;
 
-            document.getElementById("categoryLabel")
-                .textContent =
+            document.getElementById(
+                "categoryLabel"
+            ).textContent =
                 categoryData.label;
 
             loadGallery(category);
@@ -686,14 +734,12 @@
         }
 
 
-        /*
-         * GALERİYİ GITHUB'TAN ÇEK
-         */
-
         async function loadGallery(category) {
 
             const gallery =
-                document.getElementById("gallery");
+                document.getElementById(
+                    "gallery"
+                );
 
             const apiUrl =
                 `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/images/${category}?ref=${GITHUB_BRANCH}`;
@@ -722,10 +768,6 @@
                 const files =
                     await response.json();
 
-
-                /*
-                 * SADECE FOTOĞRAF VE VİDEOLAR
-                 */
 
                 const mediaFiles =
                     files
@@ -779,10 +821,6 @@
                 }
 
 
-                /*
-                 * DOSYALARI GALERİYE EKLE
-                 */
-
                 mediaFiles.forEach(file => {
 
                     const extension =
@@ -829,10 +867,6 @@
         }
 
 
-        /*
-         * DOSYA UZANTISINI AL
-         */
-
         function getExtension(filename) {
 
             return filename
@@ -843,20 +877,12 @@
         }
 
 
-        /*
-         * RAW GITHUB URL
-         */
-
         function getRawUrl(path) {
 
             return `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${path}`;
 
         }
 
-
-        /*
-         * FOTOĞRAF OLUŞTUR
-         */
 
         function createImage(file) {
 
@@ -902,10 +928,6 @@
         }
 
 
-        /*
-         * VİDEO OLUŞTUR
-         */
-
         function createVideo(file) {
 
             const item =
@@ -938,9 +960,36 @@
                 false;
 
 
-            /*
-             * VIDEO ETİKETİ
-             */
+            /* BÜYÜK OYNATMA TUŞU */
+
+            const playOverlay =
+                document.createElement("button");
+
+            playOverlay.type =
+                "button";
+
+            playOverlay.className =
+                "video-play-overlay";
+
+            playOverlay.setAttribute(
+                "aria-label",
+                "Videoyu oynat"
+            );
+
+
+            const playIcon =
+                document.createElement("span");
+
+            playIcon.className =
+                "video-play-icon";
+
+
+            playOverlay.appendChild(
+                playIcon
+            );
+
+
+            /* VİDEO ETİKETİ */
 
             const label =
                 document.createElement("div");
@@ -952,9 +1001,7 @@
                 "Video";
 
 
-            /*
-             * KONTROLLER
-             */
+            /* KONTROLLER */
 
             const controls =
                 document.createElement("div");
@@ -962,10 +1009,6 @@
             controls.className =
                 "video-controls";
 
-
-            /*
-             * OYNAT / DURAKLAT
-             */
 
             const playButton =
                 document.createElement("button");
@@ -984,10 +1027,6 @@
                 "Oynat / Duraklat"
             );
 
-
-            /*
-             * İLERLEME ÇUBUĞU
-             */
 
             const progress =
                 document.createElement("input");
@@ -1016,10 +1055,6 @@
             );
 
 
-            /*
-             * SÜRE
-             */
-
             const time =
                 document.createElement("span");
 
@@ -1029,10 +1064,6 @@
             time.textContent =
                 "0:00 / 0:00";
 
-
-            /*
-             * SES
-             */
 
             const muteButton =
                 document.createElement("button");
@@ -1052,10 +1083,6 @@
             );
 
 
-            /*
-             * TAM EKRAN
-             */
-
             const fullscreenButton =
                 document.createElement("button");
 
@@ -1073,10 +1100,6 @@
                 "Tam ekran"
             );
 
-
-            /*
-             * ELEMANLARI BİRLEŞTİR
-             */
 
             controls.appendChild(
                 playButton
@@ -1100,15 +1123,28 @@
 
 
             player.appendChild(video);
+            player.appendChild(playOverlay);
             player.appendChild(label);
             player.appendChild(controls);
 
             item.appendChild(player);
 
 
-            /*
-             * OYNAT / DURAKLAT
-             */
+            /* BÜYÜK OYNATMA TUŞU */
+
+            playOverlay.addEventListener(
+                "click",
+                event => {
+
+                    event.stopPropagation();
+
+                    video.play();
+
+                }
+            );
+
+
+            /* OYNAT / DURAKLAT */
 
             playButton.addEventListener(
                 "click",
@@ -1116,23 +1152,27 @@
 
                     event.stopPropagation();
 
-                    if (video.paused) {
-
-                        video.play();
-
-                    } else {
-
-                        video.pause();
-
-                    }
+                    toggleVideo(video);
 
                 }
             );
 
 
-            /*
-             * VİDEO OYNADIĞINDA
-             */
+            /* VİDEOYA TIKLAYINCA OYNAT */
+
+            video.addEventListener(
+                "click",
+                event => {
+
+                    event.stopPropagation();
+
+                    toggleVideo(video);
+
+                }
+            );
+
+
+            /* OYNATILDI */
 
             video.addEventListener(
                 "play",
@@ -1140,6 +1180,12 @@
 
                     playButton.textContent =
                         "❚❚";
+
+                    playOverlay.style.opacity =
+                        "0";
+
+                    playOverlay.style.pointerEvents =
+                        "none";
 
                     player.classList.add(
                         "playing"
@@ -1149,9 +1195,7 @@
             );
 
 
-            /*
-             * VİDEO DURDUĞUNDA
-             */
+            /* DURAKLATILDI */
 
             video.addEventListener(
                 "pause",
@@ -1160,6 +1204,12 @@
                     playButton.textContent =
                         "▶";
 
+                    playOverlay.style.opacity =
+                        "1";
+
+                    playOverlay.style.pointerEvents =
+                        "auto";
+
                     player.classList.remove(
                         "playing"
                     );
@@ -1168,9 +1218,7 @@
             );
 
 
-            /*
-             * VİDEO BİTTİĞİNDE
-             */
+            /* VİDEO BİTTİ */
 
             video.addEventListener(
                 "ended",
@@ -1179,6 +1227,12 @@
                     playButton.textContent =
                         "▶";
 
+                    playOverlay.style.opacity =
+                        "1";
+
+                    playOverlay.style.pointerEvents =
+                        "auto";
+
                     player.classList.remove(
                         "playing"
                     );
@@ -1187,9 +1241,7 @@
             );
 
 
-            /*
-             * İLERLEME
-             */
+            /* İLERLEME */
 
             video.addEventListener(
                 "timeupdate",
@@ -1223,9 +1275,7 @@
             );
 
 
-            /*
-             * METADATA YÜKLENDİĞİNDE
-             */
+            /* METADATA */
 
             video.addEventListener(
                 "loadedmetadata",
@@ -1241,9 +1291,7 @@
             );
 
 
-            /*
-             * İLERLEME ÇUBUĞU
-             */
+            /* İLERLEME ÇUBUĞU */
 
             progress.addEventListener(
                 "input",
@@ -1271,9 +1319,7 @@
             );
 
 
-            /*
-             * SES AÇ / KAPAT
-             */
+            /* SES */
 
             muteButton.addEventListener(
                 "click",
@@ -1293,9 +1339,7 @@
             );
 
 
-            /*
-             * TAM EKRAN
-             */
+            /* TAM EKRAN */
 
             fullscreenButton.addEventListener(
                 "click",
@@ -1334,9 +1378,7 @@
             );
 
 
-            /*
-             * TAM EKRAN DURUMU
-             */
+            /* TAM EKRAN İKONU */
 
             document.addEventListener(
                 "fullscreenchange",
@@ -1361,36 +1403,7 @@
             );
 
 
-            /*
-             * VİDEO ÜZERİNE TIKLAMA
-             *
-             * Kontroller dışındaki alana
-             * tıklayınca oynat / duraklat.
-             */
-
-            video.addEventListener(
-                "click",
-                event => {
-
-                    event.stopPropagation();
-
-                    if (video.paused) {
-
-                        video.play();
-
-                    } else {
-
-                        video.pause();
-
-                    }
-
-                }
-            );
-
-
-            /*
-             * SAĞ TIK MENÜSÜNÜ ENGELLE
-             */
+            /* SAĞ TIK */
 
             video.addEventListener(
                 "contextmenu",
@@ -1409,9 +1422,20 @@
         }
 
 
-        /*
-         * SÜREYİ FORMATLA
-         */
+        function toggleVideo(video) {
+
+            if (video.paused) {
+
+                video.play();
+
+            } else {
+
+                video.pause();
+
+            }
+
+        }
+
 
         function formatTime(seconds) {
 
@@ -1445,10 +1469,6 @@
         }
 
 
-        /*
-         * LIGHTBOX AÇ
-         */
-
         function openLightbox(src) {
 
             const lightbox =
@@ -1477,10 +1497,6 @@
         }
 
 
-        /*
-         * LIGHTBOX KAPAT
-         */
-
         function closeLightbox() {
 
             const lightbox =
@@ -1506,10 +1522,6 @@
         }
 
 
-        /*
-         * LIGHTBOX KAPATMA BUTONU
-         */
-
         document
             .getElementById(
                 "lightboxClose"
@@ -1519,10 +1531,6 @@
                 closeLightbox
             );
 
-
-        /*
-         * LIGHTBOX DIŞINA TIKLAMA
-         */
 
         document
             .getElementById(
@@ -1544,10 +1552,6 @@
                 }
             );
 
-
-        /*
-         * ESC İLE KAPAT
-         */
 
         document.addEventListener(
             "keydown",
